@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             QuranAlFatihahSeeder::class,
             FullQuranSeeder::class,
             TopQuranicVocabularySeeder::class,
+            ShortSurahsWordByWordSeeder::class,
         ]);
 
         Lesson::firstOrCreate(

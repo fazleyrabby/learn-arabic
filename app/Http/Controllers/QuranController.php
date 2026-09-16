@@ -28,11 +28,13 @@ class QuranController extends Controller
         }
 
         $surahs = $query->get();
-        $kidsSurahNumbers = [1, 112, 113, 114, 108, 110, 103, 109, 105, 106, 107];
+        $kidsSurahNumbers = [1, 112, 113, 114, 108, 110, 103, 109, 105, 106, 107, 97];
+        $wordByWordSurahNumbers = [1, 97, 103, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114];
 
         return view('quran.index', [
             'surahs' => $surahs,
             'kidsSurahNumbers' => $kidsSurahNumbers,
+            'wordByWordSurahNumbers' => $wordByWordSurahNumbers,
             'activeTab' => $request->query('tab', 'kids'),
             'searchQuery' => $search ?? '',
         ]);

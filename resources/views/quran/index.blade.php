@@ -114,9 +114,14 @@
                                 <span class="w-9 h-9 rounded-2xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#E8E2D8] dark:border-[#212B3E] text-xs font-mono font-bold flex items-center justify-center text-[#1B4D3E] dark:text-emerald-400 shadow-xs">
                                     {{ $surah->number }}
                                 </span>
+                                @if (in_array($surah->number, $wordByWordSurahNumbers, true))
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800" title="{{ __('Full Word-by-Word Audio & Morphology') }}">
+                                        🌱 {{ app()->getLocale() === 'bn' ? 'শব্দে শব্দে' : 'Word-by-Word' }}
+                                    </span>
+                                @endif
                                 @if (in_array($surah->number, $kidsSurahNumbers, true))
                                     <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
-                                        ⭐ {{ __('Kids Pick') }}
+                                        ⭐ {{ __('Kids') }}
                                     </span>
                                 @endif
                             </div>

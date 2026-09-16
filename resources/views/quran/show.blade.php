@@ -374,7 +374,7 @@
                                 <!-- Word Bengali/English Translation subtitle if available -->
                                 <template x-if="word.translation_bn || word.translation">
                                     <span class="text-[10px] font-medium text-[#5C656C] dark:text-[#94A3B8] mt-1 line-clamp-1"
-                                          x-text="word.translation_bn || word.translation">
+                                          x-text="'{{ app()->getLocale() }}' === 'bn' ? (word.translation_bn || word.translation) : (word.translation || word.translation_bn)">
                                     </span>
                                 </template>
 
