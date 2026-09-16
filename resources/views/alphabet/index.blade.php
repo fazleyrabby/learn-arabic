@@ -5,6 +5,7 @@
         activeTab: '{{ request('tab', 'kids') }}',
         activeAudioUrl: null,
         playedLetters: new Set(),
+        selectedLetterOrder: 2,
         selectedLetterChar: 'ب',
         selectedLetterName: 'Baa',
         selectedLetterBn: 'বা',
@@ -45,7 +46,7 @@
             'ي': { fathah: ['Ya', 'ইয়া'], kasrah: ['Yi', 'ই'], dammah: ['Yu', 'ইউ'] },
         },
 
-        mixHarakat(harakat, type, chimeFreq) {
+        mixHarakat(harakat, type) {
             this.activeHarakat = type;
             this.harakatSymbol = harakat;
             const letter = this.selectedLetterChar;
@@ -58,15 +59,14 @@
             this.soundLabelEn = pair[0];
             this.soundLabelBn = pair[1];
 
-            if (window.playChime) {
-                window.playChime(chimeFreq, 'sine', 0.18);
-            }
-
+            // Play authentic recorded MP3 syllable
+            const audioPath = `/audio/syllables/${this.selectedLetterOrder}_${type}.mp3`;
             const combined = letter + harakat;
-            window.speakArabic(combined, pair[0]);
+            window.playAudio(audioPath, combined);
         },
 
         tapLetter(l) {
+            this.selectedLetterOrder = l.order;
             this.selectedLetterChar = l.character;
             this.selectedLetterName = l.name_latin;
             this.selectedLetterBn = l.name_bn || l.name_latin;
@@ -79,12 +79,22 @@
                     this.soundLabelEn = map[this.activeHarakat][0];
                     this.soundLabelBn = map[this.activeHarakat][1];
                 }
+                const audioPath = `/audio/syllables/${l.order}_${this.activeHarakat}.mp3`;
                 const combined = l.character + this.harakatSymbol;
-                window.speakArabic(combined, this.soundLabelEn);
+                window.playAudio(audioPath, combined);
             } else {
                 this.soundLabelEn = l.name_latin;
                 this.soundLabelBn = l.name_bn || l.name_latin;
                 window.playAudio(l.audio_url, l.name_ar);
+            }
+        },
+
+        replayCurrent() {
+            if (this.activeHarakat) {
+                const audioPath = `/audio/syllables/${this.selectedLetterOrder}_${this.activeHarakat}.mp3`;
+                window.playAudio(audioPath, this.selectedLetterChar + this.harakatSymbol);
+            } else if (this.selectedLetterAudio) {
+                window.playAudio(this.selectedLetterAudio, this.selectedLetterName);
             }
         },
 
@@ -146,7 +156,7 @@
                     <!-- Active Letter Display + Harakat Action Buttons -->
                     <div class="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto justify-center">
                         <!-- Big Tactile Selected Letter / Syllable Tile -->
-                        <div class="relative group cursor-pointer" @click="activeHarakat ? resetHarakat() : (selectedLetterAudio ? window.playAudio(selectedLetterAudio, selectedLetterName) : window.speakArabic(selectedLetterChar))" title="Tap to replay sound">
+                        <div class="relative group cursor-pointer" @click="replayCurrent()" title="Tap to replay sound">
                             <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl flex flex-col items-center justify-center shadow-lg transition-all transform active:scale-95 select-none shrink-0 border-2"
                                  :class="activeHarakat === 'fathah' 
                                     ? 'bg-red-50 dark:bg-red-950/60 border-red-400 dark:border-red-500 ring-4 ring-red-200/50 dark:ring-red-900/30' 
@@ -188,7 +198,7 @@
                         <!-- 3 Big Tactile Harakat Buttons -->
                         <div class="grid grid-cols-3 gap-2 sm:gap-2.5 w-full sm:w-auto">
                             <!-- Fathah (A sound) -->
-                            <button @click="mixHarakat('َ', 'fathah', 523)" 
+                            <button @click="mixHarakat('َ', 'fathah')" 
                                     type="button" 
                                     class="relative px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl border-2 transition-all text-center cursor-pointer shadow-xs select-none"
                                     :class="activeHarakat === 'fathah' 
@@ -202,7 +212,7 @@
                             </button>
 
                             <!-- Kasrah (I sound) -->
-                            <button @click="mixHarakat('ِ', 'kasrah', 659)" 
+                            <button @click="mixHarakat('ِ', 'kasrah')" 
                                     type="button" 
                                     class="relative px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl border-2 transition-all text-center cursor-pointer shadow-xs select-none"
                                     :class="activeHarakat === 'kasrah' 
@@ -216,7 +226,7 @@
                             </button>
 
                             <!-- Dammah (U sound) -->
-                            <button @click="mixHarakat('ُ', 'dammah', 392)" 
+                            <button @click="mixHarakat('ُ', 'dammah')" 
                                     type="button" 
                                     class="relative px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl border-2 transition-all text-center cursor-pointer shadow-xs select-none"
                                     :class="activeHarakat === 'dammah' 

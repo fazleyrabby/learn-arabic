@@ -90,33 +90,9 @@ class="h-full scroll-smooth"
             }
         };
 
-        window.playChime = function(freq = 520, type = 'sine', duration = 0.15) {
-            try {
-                const AudioCtx = window.AudioContext || window.webkitAudioContext;
-                if (!AudioCtx) return;
-                const ctx = window._audioCtx || (window._audioCtx = new AudioCtx());
-                if (ctx.state === 'suspended') {
-                    ctx.resume();
-                }
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.type = type;
-                osc.frequency.setValueAtTime(freq, ctx.currentTime);
-                gain.gain.setValueAtTime(0.18, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + duration);
-            } catch(e) {}
-        };
-
         window.speakArabic = function(text, fallback) {
             if (!text) return;
-            if (!('speechSynthesis' in window)) {
-                window.playChime(480, 'triangle', 0.2);
-                return;
-            }
+            if (!('speechSynthesis' in window)) return;
             try {
                 if (window.speechSynthesis.paused) {
                     window.speechSynthesis.resume();
@@ -137,15 +113,12 @@ class="h-full scroll-smooth"
                         const fb = new SpeechSynthesisUtterance(fallback);
                         fb.rate = 0.85;
                         window.speechSynthesis.speak(fb);
-                    } else {
-                        window.playChime(440, 'triangle', 0.2);
                     }
                 };
 
                 window.speechSynthesis.speak(utterance);
             } catch(e) {
                 console.warn('SpeechSynthesis error:', e);
-                window.playChime(440, 'triangle', 0.2);
             }
         };
     </script>
@@ -491,20 +464,208 @@ class="h-full scroll-smooth"
         </button>
     </nav>
 
-    <!-- Reverent Scholarly Footer (Hidden on mobile to keep clean thumb area) -->
-    <footer class="mt-auto border-t border-[#E8E2D8] dark:border-[#1E2738] py-10 text-xs text-[#5C656C] dark:text-[#94A3B8] hidden sm:block">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-                <span class="font-display font-semibold tracking-wider text-[#181C1E] dark:text-white">QURANIC ARABIC</span>
-                <span>•</span>
-                <a href="{{ route('references') }}" class="hover:text-[#181C1E] dark:hover:text-white transition-colors underline underline-offset-4">
-                    {{ __('Sources & Verification') }}
-                </a>
+    <!-- Reverent Scholarly Footer with Made by Fazley & Support Modal -->
+    <footer class="mt-auto border-t border-[#E8E2D8] dark:border-[#1E2738] py-8 pb-24 sm:pb-10 text-xs text-[#5C656C] dark:text-[#94A3B8]" x-data="{ supportModalOpen: false, copiedPayoneer: false }">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-5">
+            <!-- Brand & Credits -->
+            <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 text-center sm:text-left">
+                <div class="flex items-center gap-2.5">
+                    <span class="font-display font-semibold tracking-wider text-[#181C1E] dark:text-white">QURANIC ARABIC</span>
+                    <span>•</span>
+                    <a href="{{ route('references') }}" class="hover:text-[#181C1E] dark:hover:text-white transition-colors underline underline-offset-4">
+                        {{ __('Sources & Verification') }}
+                    </a>
+                </div>
+                <span class="hidden sm:inline text-[#CCD2D9] dark:text-[#334155]">•</span>
+                <div class="flex items-center gap-1.5 flex-wrap justify-center">
+                    <span>Made by</span>
+                    <a href="https://fazleyrabbi.xyz" target="_blank" rel="noopener noreferrer" class="font-semibold text-[#1B4D3E] dark:text-emerald-400 hover:underline inline-flex items-center gap-1">
+                        Fazley
+                        <svg class="w-3 h-3 opacity-70" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+                    </a>
+                    <span class="text-[#7A8692] dark:text-[#64748B]">(<a href="https://fazleyrabbi.xyz" target="_blank" rel="noopener noreferrer" class="hover:underline text-[#5C656C] dark:text-[#94A3B8]">fazleyrabbi.xyz</a>)</span>
+                </div>
             </div>
-            <div class="font-arabic text-base text-[#1B4D3E] dark:text-emerald-400 select-none">
-                وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ
+
+            <!-- Quranic Verse & Support Trigger -->
+            <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-5">
+                <div class="font-arabic text-base sm:text-lg text-[#1B4D3E] dark:text-emerald-400 select-none text-center" dir="rtl">
+                    وَلَقَدْ يَسَّرْنَا الْقُرْآنَ لِلذِّكْرِ فَهَلْ مِن مُّدَّكِرٍ
+                </div>
+
+                <!-- Support Button (Only in footer, not sticky/floating) -->
+                <button 
+                    type="button"
+                    @click="supportModalOpen = true"
+                    class="cursor-pointer inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-medium bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/30 hover:border-amber-500/50 shadow-xs hover:shadow-sm transition-all transform active:scale-95 shrink-0"
+                    aria-label="Support the project"
+                >
+                    <svg class="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+                        <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>
+                        <line x1="6" x2="6" y1="2" y2="4"/>
+                        <line x1="10" x2="10" y1="2" y2="4"/>
+                        <line x1="14" x2="14" y1="2" y2="4"/>
+                    </svg>
+                    <span>{{ __('Support me') }}</span>
+                </button>
             </div>
         </div>
+
+        <!-- Support Modal Backdrop & Dialog -->
+        <template x-teleport="body">
+            <div 
+                x-show="supportModalOpen" 
+                x-cloak
+                @keydown.escape.window="supportModalOpen = false"
+                class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-xs transition-opacity duration-200"
+                x-transition:enter="ease-out duration-200"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="ease-in duration-150"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="support-modal-title"
+            >
+                <!-- Modal Card -->
+                <div 
+                    @click.away="supportModalOpen = false"
+                    class="relative w-full max-w-[500px] p-6 sm:p-7 rounded-3xl bg-[#0f0f11] text-white border border-white/10 shadow-2xl flex flex-col gap-5 font-sans max-h-[90vh] overflow-y-auto"
+                    x-transition:enter="ease-out duration-200"
+                    x-transition:enter-start="opacity-0 scale-95"
+                    x-transition:enter-end="opacity-100 scale-100"
+                    x-transition:leave="ease-in duration-150"
+                    x-transition:leave-start="opacity-100 scale-100"
+                    x-transition:leave-end="opacity-0 scale-95"
+                >
+                    <!-- Close Button -->
+                    <button 
+                        @click="supportModalOpen = false" 
+                        type="button"
+                        class="absolute top-5 right-5 p-1.5 rounded-lg text-white/50 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                        aria-label="Close modal"
+                    >
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                        </svg>
+                    </button>
+
+                    <!-- Header -->
+                    <div class="flex items-center gap-3.5 border-b border-white/10 pb-4 pr-6">
+                        <div class="w-11 h-11 flex items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-[#FFDD00] shadow-sm shrink-0">
+                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+                                <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>
+                                <line x1="6" x2="6" y1="2" y2="4"/>
+                                <line x1="10" x2="10" y1="2" y2="4"/>
+                                <line x1="14" x2="14" y1="2" y2="4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 id="support-modal-title" class="text-lg font-bold text-white leading-tight">Support the Project</h2>
+                            <p class="text-xs text-white/60 mt-0.5">Keep open source Islamic education free and accessible</p>
+                        </div>
+                    </div>
+
+                    <!-- Support Options -->
+                    <div class="flex flex-col gap-3.5">
+                        <!-- Buy Me a Coffee (International) -->
+                        <div class="rounded-2xl p-4 border border-[#FFDD00]/30 bg-gradient-to-b from-[#FFDD00]/10 to-transparent hover:border-[#FFDD00]/50 transition-colors">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#FFDD00] rounded-xl flex items-center justify-center shadow-md shadow-[#FFDD00]/20 shrink-0 text-black">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M17 8h1a4 4 0 1 1 0 8h-1"/>
+                                            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"/>
+                                            <line x1="6" x2="6" y1="2" y2="4"/>
+                                            <line x1="10" x2="10" y1="2" y2="4"/>
+                                            <line x1="14" x2="14" y1="2" y2="4"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <span class="font-semibold text-sm text-white">Buy Me a Coffee</span>
+                                            <span class="text-[10px] font-bold uppercase tracking-wider bg-[#FFDD00]/20 text-[#FFDD00] border border-[#FFDD00]/30 px-1.5 py-0.5 rounded-md">Global / Int'l</span>
+                                        </div>
+                                        <span class="text-xs text-white/60 mt-0.5">Card, Apple Pay, Google Pay ($)</span>
+                                    </div>
+                                </div>
+                                <a 
+                                    href="https://buymeacoffee.com/fazleyrabbi" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    class="bg-[#FFDD00] hover:bg-[#ffe633] text-black font-semibold text-xs px-3.5 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-colors self-end sm:self-auto shrink-0 shadow-xs"
+                                >
+                                    Support $
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- SupportKori (Bangladesh / bKash / Nagad) -->
+                        <div class="rounded-2xl p-4 border border-[#10B981]/30 bg-gradient-to-b from-[#10B981]/10 to-transparent hover:border-[#10B981]/50 transition-colors">
+                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-[#10B981] rounded-xl flex items-center justify-center shadow-md shadow-[#10B981]/20 shrink-0 text-black">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <span class="font-semibold text-sm text-white">SupportKori</span>
+                                            <span class="text-[10px] font-bold uppercase tracking-wider bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/30 px-1.5 py-0.5 rounded-md">🇧🇩 bKash • Nagad</span>
+                                        </div>
+                                        <span class="text-xs text-white/60 mt-0.5">For Bangladesh users (BDT ৳)</span>
+                                    </div>
+                                </div>
+                                <a 
+                                    href="https://www.supportkori.com/fazleyrabbi" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    class="bg-[#10B981] hover:bg-[#34d399] text-black font-semibold text-xs px-3.5 py-2 rounded-xl flex items-center justify-center gap-1.5 transition-colors self-end sm:self-auto shrink-0 shadow-xs"
+                                >
+                                    Support ৳
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Direct Payoneer ($0 Fee) -->
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col gap-3">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-white/70 font-mono">Payoneer Customer ID:</span>
+                                <span class="text-[#10B981] font-semibold text-[11px]">$0 Fee Direct</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between bg-black/60 border border-white/10 rounded-xl p-1.5 pl-3">
+                                <span class="text-[#FFDD00] font-mono font-semibold text-base tracking-wider">24076084</span>
+                                <button 
+                                    type="button"
+                                    @click="navigator.clipboard.writeText('24076084'); copiedPayoneer = true; setTimeout(() => copiedPayoneer = false, 2000)"
+                                    class="text-xs font-mono bg-white/10 hover:bg-white/20 text-white/90 px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-colors cursor-pointer"
+                                    :class="copiedPayoneer ? 'text-[#10B981] bg-[#10B981]/20' : ''"
+                                >
+                                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                                    <span x-text="copiedPayoneer ? 'Copied!' : 'Copy ID'">Copy ID</span>
+                                </button>
+                            </div>
+
+                            <div class="text-[11px] text-white/50 leading-relaxed bg-white/5 rounded-lg p-2.5">
+                                <span class="text-white/80">💡 In Payoneer App:</span> Go to <strong class="text-white/80 font-medium">Pay → Pay to recipient</strong> → Enter ID <span class="text-[#FFDD00] font-mono">24076084</span>.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Modal Footer -->
+                    <div class="border-t border-white/10 pt-3 text-center">
+                        <p class="text-[11px] text-white/50 m-0">Thank you for your support! ✨ جَزَاكُمُ اللَّهُ خَيْرًا</p>
+                    </div>
+                </div>
+            </div>
+        </template>
     </footer>
 
 </body>
