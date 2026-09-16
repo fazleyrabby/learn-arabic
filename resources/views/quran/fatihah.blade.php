@@ -103,7 +103,7 @@
                                 </span>
 
                                 <span class="text-[11px] sm:text-xs text-[#687076] dark:text-[#94A3B8] font-medium mt-1">
-                                    {{ $word->translation }}
+                                    {{ app()->getLocale() === 'bn' && $word->translation_bn ? $word->translation_bn : $word->translation }}
                                 </span>
 
                                 <span class="text-[9px] text-[#687076]/70 dark:text-[#94A3B8]/70 font-mono">
@@ -120,9 +120,14 @@
 
                     <!-- Translations -->
                     <div class="pt-2 space-y-1 text-sm text-[#687076] dark:text-[#94A3B8]">
-                        <p class="text-[#1A1D20] dark:text-white leading-relaxed">{{ $verse->translation }}</p>
-                        @if ($verse->translation_bn)
-                            <p class="text-xs text-[#687076] dark:text-[#94A3B8]">{{ $verse->translation_bn }}</p>
+                        @if (app()->getLocale() === 'bn' && $verse->translation_bn)
+                            <p class="text-[#1A1D20] dark:text-white leading-relaxed font-medium">{{ $verse->translation_bn }}</p>
+                            <p class="text-xs text-[#687076] dark:text-[#94A3B8]">{{ $verse->translation }}</p>
+                        @else
+                            <p class="text-[#1A1D20] dark:text-white leading-relaxed">{{ $verse->translation }}</p>
+                            @if ($verse->translation_bn)
+                                <p class="text-xs text-[#687076] dark:text-[#94A3B8]">{{ $verse->translation_bn }}</p>
+                            @endif
                         @endif
                     </div>
                 </div>

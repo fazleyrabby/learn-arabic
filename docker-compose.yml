@@ -1,0 +1,46 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: learn_arabic_app
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8087}:80"
+    environment:
+      APP_NAME: "Quranic Arabic"
+      APP_ENV: production
+      APP_KEY: "${APP_KEY}"
+      APP_DEBUG: "false"
+      APP_URL: "${APP_URL:-https://arabic.fazleyrabbi.xyz}"
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: "${DB_DATABASE:-learn_arabic}"
+      DB_USERNAME: "${DB_USERNAME:-learn_arabic}"
+      DB_PASSWORD: "${DB_PASSWORD:-learn_arabic_pwd_2026}"
+      SESSION_DRIVER: cookie
+      CACHE_STORE: database
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: learn_arabic_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "${DB_DATABASE:-learn_arabic}"
+      POSTGRES_USER: "${DB_USERNAME:-learn_arabic}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD:-learn_arabic_pwd_2026}"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-learn_arabic} -d ${DB_DATABASE:-learn_arabic}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
+    driver: local

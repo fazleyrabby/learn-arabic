@@ -31,3 +31,13 @@ Route::post('/review/submit', [ReviewController::class, 'submit'])->name('review
 Route::get('/references', function () {
     return view('references');
 })->name('references');
+
+// Language Switching (English / Bengali)
+Route::get('/locale/{locale}', function (string $locale) {
+    if (in_array($locale, ['en', 'bn'], true)) {
+        session(['locale' => $locale]);
+        cookie()->queue(cookie()->forever('locale', $locale));
+    }
+
+    return redirect()->back();
+})->name('locale.switch');

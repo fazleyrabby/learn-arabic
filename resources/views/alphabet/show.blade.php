@@ -37,12 +37,15 @@
             </div>
 
             <h1 class="text-2xl font-bold text-[#1A1D20] dark:text-white tracking-tight flex items-center gap-3">
-                <span>{{ $letter->name_latin }}</span>
+                <span>{{ app()->getLocale() === 'bn' && $letter->name_bn ? $letter->name_bn : $letter->name_latin }}</span>
                 <span class="font-arabic text-2xl text-[#1B4D3E] dark:text-emerald-400 font-normal">({{ $letter->name_ar }})</span>
             </h1>
 
             <p class="text-sm font-medium text-[#687076] dark:text-[#94A3B8] mt-1">
-                Phonetic Transliteration: <span class="text-[#1A1D20] dark:text-white font-mono font-bold">{{ $letter->transliteration }}</span>
+                {{ app()->getLocale() === 'bn' ? 'উচ্চারণ (লিপ্যন্তর):' : 'Phonetic Transliteration:' }}
+                <span class="text-[#1A1D20] dark:text-white font-mono font-bold">
+                    {{ app()->getLocale() === 'bn' && $letter->transliteration_bn ? $letter->transliteration_bn : $letter->transliteration }}
+                </span>
             </p>
 
             <!-- Audio Trigger -->
@@ -50,23 +53,27 @@
                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
                 </svg>
-                <span>Listen to Pronunciation</span>
+                <span>{{ __('Listen') }}</span>
             </button>
         </div>
 
         <!-- Makhraj & Linguistic Notes -->
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div class="rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 space-y-2">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[#1B4D3E] dark:text-emerald-400">Articulation Point (Makhraj)</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[#1B4D3E] dark:text-emerald-400">
+                    {{ app()->getLocale() === 'bn' ? 'মাখরাজ (বিশুদ্ধ উচ্চারণস্থল)' : 'Articulation Point (Makhraj)' }}
+                </h3>
                 <p class="text-sm text-[#1A1D20] dark:text-white font-medium leading-relaxed">
-                    {{ $letter->makhraj }}
+                    {{ app()->getLocale() === 'bn' && $letter->makhraj_bn ? $letter->makhraj_bn : $letter->makhraj }}
                 </p>
             </div>
 
             <div class="rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 space-y-2">
-                <h3 class="text-xs font-bold uppercase tracking-wider text-[#9A722C] dark:text-amber-400">Phonetic Characteristics</h3>
+                <h3 class="text-xs font-bold uppercase tracking-wider text-[#9A722C] dark:text-amber-400">
+                    {{ app()->getLocale() === 'bn' ? 'ধ্বনি বৈশিষ্ট্য ও নিয়ম' : 'Phonetic Characteristics' }}
+                </h3>
                 <p class="text-sm text-[#687076] dark:text-[#94A3B8] leading-relaxed">
-                    {{ $letter->description }}
+                    {{ app()->getLocale() === 'bn' && $letter->description_bn ? $letter->description_bn : $letter->description }}
                 </p>
             </div>
         </div>

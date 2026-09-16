@@ -51,13 +51,22 @@
 
                     <!-- English & Bangla Meanings -->
                     <div class="space-y-1 text-center border-t border-[#EBE6DE]/60 dark:border-[#212B3E]/60 pt-3">
-                        <div class="text-xs font-semibold text-[#1A1D20] dark:text-white line-clamp-1">
-                            {{ $word->meaning_en }}
-                        </div>
-                        @if ($word->meaning_bn)
-                            <div class="text-[11px] text-[#687076] dark:text-[#94A3B8] line-clamp-1">
+                        @if (app()->getLocale() === 'bn' && $word->meaning_bn)
+                            <div class="text-xs font-semibold text-[#1A1D20] dark:text-white line-clamp-1">
                                 {{ $word->meaning_bn }}
                             </div>
+                            <div class="text-[11px] text-[#687076] dark:text-[#94A3B8] line-clamp-1">
+                                {{ $word->meaning_en }}
+                            </div>
+                        @else
+                            <div class="text-xs font-semibold text-[#1A1D20] dark:text-white line-clamp-1">
+                                {{ $word->meaning_en }}
+                            </div>
+                            @if ($word->meaning_bn)
+                                <div class="text-[11px] text-[#687076] dark:text-[#94A3B8] line-clamp-1">
+                                    {{ $word->meaning_bn }}
+                                </div>
+                            @endif
                         @endif
                     </div>
 

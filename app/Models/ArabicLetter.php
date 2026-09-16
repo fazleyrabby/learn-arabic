@@ -11,10 +11,14 @@ class ArabicLetter extends Model
         'character',
         'name_ar',
         'name_latin',
+        'name_bn',
         'transliteration',
+        'transliteration_bn',
         'order',
         'description',
+        'description_bn',
         'makhraj',
+        'makhraj_bn',
         'audio_url',
     ];
 
