@@ -350,7 +350,7 @@
         </div>
 
         <!-- Open Audit & Feedback -->
-        <div class="rounded-2xl bg-gradient-to-br from-white to-[#FAF8F5] dark:from-[#111723] dark:to-[#0C111C] border border-[#E8E2D8] dark:border-[#1E2738] p-8 space-y-4 shadow-xs">
+        <div class="rounded-2xl bg-gradient-to-br from-white to-[#FAF8F5] dark:from-[#111723] dark:to-[#0C111C] border border-[#E8E2D8] dark:border-[#1E2738] p-5 sm:p-8 space-y-4 shadow-xs">
             <div class="flex items-center gap-3">
                 <div class="w-9 h-9 rounded-xl bg-[#1B4D3E] text-white flex items-center justify-center font-bold text-sm">
                     ق
@@ -361,19 +361,19 @@
                 </div>
             </div>
             
-            <p class="text-sm text-[#5C656C] dark:text-[#94A3B8] leading-relaxed">
+            <p class="text-xs sm:text-sm text-[#5C656C] dark:text-[#94A3B8] leading-relaxed">
                 We invite students of knowledge, scholars, and computational linguists to audit our database. If you observe any typographical nuance, missing shaddah, or transliteration improvement, please submit an issue on our GitHub repository. Every report is cross-verified directly against the Tanzil Medina standard and Leeds treebank.
             </p>
 
-            <div class="pt-2 flex flex-wrap items-center gap-4">
-                <a href="https://github.com/fazleyrabby/learn-arabic/issues" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#1B4D3E] hover:bg-[#153D31] text-white text-xs font-semibold shadow-xs transition-colors">
+            <div class="pt-2 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+                <a href="https://github.com/fazleyrabby/learn-arabic/issues" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#1B4D3E] hover:bg-[#153D31] text-white text-xs font-semibold shadow-xs transition-colors text-center">
                     <span>Submit Correction on GitHub</span>
                     <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                     </svg>
                 </a>
                 
-                <a href="{{ route('dashboard') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white transition-colors">
+                <a href="{{ route('dashboard') }}" class="inline-flex items-center justify-center sm:justify-start gap-1.5 text-xs font-semibold text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white transition-colors">
                     <span>Back to Learning Path</span>
                     <span>&rarr;</span>
                 </a>

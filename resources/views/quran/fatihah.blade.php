@@ -24,7 +24,7 @@
     }" class="space-y-10 relative">
 
         <!-- Surah Header Card -->
-        <div class="rounded-3xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-8 text-center relative overflow-hidden shadow-xs">
+        <div class="rounded-3xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-5 sm:p-8 text-center relative overflow-hidden shadow-xs">
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#1B4D3E]/10 text-[#1B4D3E] dark:bg-emerald-400/10 dark:text-emerald-400 border border-[#1B4D3E]/20 dark:border-emerald-400/20 mb-3">
                 <span>Surah #{{ $surah->number }}</span>
                 <span>•</span>
@@ -33,11 +33,11 @@
                 <span>{{ $surah->verse_count }} Verses</span>
             </div>
 
-            <div class="font-arabic text-5xl sm:text-6xl text-[#1A1D20] dark:text-white leading-relaxed my-2">
+            <div class="font-arabic text-4xl sm:text-6xl text-[#1A1D20] dark:text-white leading-relaxed my-2">
                 {{ $surah->name_ar }}
             </div>
 
-            <h1 class="text-xl font-bold text-[#1A1D20] dark:text-white tracking-tight">
+            <h1 class="text-lg sm:text-xl font-bold text-[#1A1D20] dark:text-white tracking-tight">
                 {{ $surah->name_latin }} <span class="text-sm font-normal text-[#687076] dark:text-[#94A3B8]">({{ $surah->name_english }})</span>
             </h1>
 
@@ -49,10 +49,10 @@
         <!-- Verses & Word-by-Word Grid -->
         <div class="space-y-6">
             @foreach ($surah->verses as $verse)
-                <div class="rounded-3xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 sm:p-8 space-y-6 shadow-xs">
+                <div class="rounded-3xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-4 sm:p-8 space-y-4 sm:space-y-6 shadow-xs">
                     <!-- Verse Meta & Audio Trigger -->
-                    <div class="flex items-center justify-between border-b border-[#EBE6DE]/60 dark:border-[#212B3E]/60 pb-4">
-                        <div class="flex items-center gap-3">
+                    <div class="flex items-center justify-between border-b border-[#EBE6DE]/60 dark:border-[#212B3E]/60 pb-3 sm:pb-4">
+                        <div class="flex items-center gap-2.5 sm:gap-3">
                             <span class="w-8 h-8 rounded-full bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] text-xs font-mono font-bold flex items-center justify-center text-[#1B4D3E] dark:text-emerald-400">
                                 1:{{ $verse->verse_number }}
                             </span>
@@ -62,7 +62,7 @@
                         </div>
 
                         <!-- Reciter Audio Button -->
-                        <button @click="playAyah('{{ $verse->audio_url }}')" type="button" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-[#EBE6DE] dark:border-[#212B3E] hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] text-xs font-medium text-[#1A1D20] dark:text-white transition-colors">
+                        <button @click="playAyah('{{ $verse->audio_url }}')" type="button" class="inline-flex items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-xl border border-[#EBE6DE] dark:border-[#212B3E] hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] text-xs font-medium text-[#1A1D20] dark:text-white transition-colors cursor-pointer">
                             <svg class="w-3.5 h-3.5 text-[#1B4D3E] dark:text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M8 5v14l11-7z"/>
                             </svg>
@@ -71,7 +71,7 @@
                     </div>
 
                     <!-- Word Tiles in RTL Flow -->
-                    <div class="flex flex-wrap flex-row-reverse gap-3 items-center justify-start py-2">
+                    <div class="flex flex-wrap flex-row-reverse gap-1.5 sm:gap-3 items-center justify-start py-2">
                         @foreach ($verse->words as $word)
                             <button @click="selectWord({{ json_encode([
                                 'id' => $word->id,
@@ -96,13 +96,13 @@
                                 'verse_num' => '1:' . $verse->verse_number
                             ]) }})" 
                             type="button" 
-                            class="group relative rounded-2xl p-3 sm:p-4 bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] hover:border-[#1B4D3E] dark:hover:border-emerald-400 hover:shadow-xs transition-all duration-150 flex flex-col items-center min-w-[70px] sm:min-w-[90px] text-center">
+                            class="group relative rounded-2xl p-2.5 sm:p-4 bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] hover:border-[#1B4D3E] dark:hover:border-emerald-400 hover:shadow-xs transition-all duration-150 flex flex-col items-center min-w-[58px] sm:min-w-[90px] text-center cursor-pointer">
                                 
                                 <span class="font-arabic text-2xl sm:text-3xl text-[#1A1D20] dark:text-white leading-relaxed group-hover:scale-105 transition-transform">
                                     {{ $word->text_ar }}
                                 </span>
 
-                                <span class="text-[11px] sm:text-xs text-[#687076] dark:text-[#94A3B8] font-medium mt-1">
+                                <span class="text-[10px] sm:text-xs text-[#687076] dark:text-[#94A3B8] font-medium mt-1">
                                     {{ app()->getLocale() === 'bn' && $word->translation_bn ? $word->translation_bn : $word->translation }}
                                 </span>
 
@@ -113,7 +113,7 @@
                         @endforeach
 
                         <!-- Verse End Symbol -->
-                        <div class="font-arabic text-2xl text-[#1B4D3E] dark:text-emerald-400 px-2 select-none self-center">
+                        <div class="font-arabic text-xl sm:text-2xl text-[#1B4D3E] dark:text-emerald-400 px-2 select-none self-center">
                             ۝{{ $verse->verse_number }}
                         </div>
                     </div>
@@ -142,7 +142,7 @@
              x-transition:leave="transition ease-in duration-200"
              x-transition:leave-start="opacity-100 translate-x-0"
              x-transition:leave-end="opacity-0 translate-x-full"
-             class="fixed inset-y-0 right-0 max-w-md w-full z-50 bg-white dark:bg-[#131926] border-l border-[#EBE6DE] dark:border-[#212B3E] shadow-2xl p-6 sm:p-8 overflow-y-auto flex flex-col justify-between"
+             class="fixed inset-y-0 right-0 max-w-full sm:max-w-md w-full z-50 bg-white dark:bg-[#131926] border-l border-[#EBE6DE] dark:border-[#212B3E] shadow-2xl p-5 sm:p-8 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:pb-8 overflow-y-auto flex flex-col justify-between"
              style="display: none;">
             
             <div class="space-y-6">
