@@ -1,7 +1,10 @@
 <x-layouts.app>
-    <x-slot:title>Arabic Alphabet & Harakat — Quranic Arabic</x-slot:title>
+    <x-slot:title>{{ __('Arabic Alphabet & Harakat') }} — {{ __('Quranic Arabic') }}</x-slot:title>
 
-    <div x-data="{ activeTab: '{{ request('tab', 'letters') }}' }" class="space-y-8">
+    <div x-data="{ 
+        activeTab: '{{ request('tab', 'letters') }}',
+        activeAudioUrl: null
+    }" class="space-y-8">
         <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-[#EBE6DE] dark:border-[#212B3E] pb-6">
             <div>
@@ -28,31 +31,37 @@
         <div x-show="activeTab === 'letters'" class="space-y-6">
             <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
                 @foreach ($letters as $l)
-                    <div class="group relative rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-4 flex flex-col items-center justify-between hover:border-[#1B4D3E]/50 dark:hover:border-emerald-500/50 hover:shadow-xs transition-all duration-150">
-                        <!-- Order Number -->
-                        <span class="self-start text-[10px] font-mono text-[#687076] dark:text-[#94A3B8]">#{{ $l->order }}</span>
+                    <div class="group relative rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-4 flex flex-col items-center justify-between hover:border-[#1B4D3E]/50 dark:hover:border-emerald-500/50 hover:shadow-xs transition-all duration-150 select-none">
+                        <!-- Order Number (links to details) -->
+                        <div class="w-full flex items-center justify-between">
+                            <span class="text-[10px] font-mono text-[#687076] dark:text-[#94A3B8]">#{{ $l->order }}</span>
+                            <a href="{{ route('alphabet.show', $l->order) }}" title="{{ __('View Details & Positional Forms') }}" class="text-[10px] text-[#687076] dark:text-[#94A3B8] hover:text-[#1B4D3E] dark:hover:text-emerald-400">
+                                ↗
+                            </a>
+                        </div>
 
-                        <!-- Letter Character -->
-                        <a href="{{ route('alphabet.show', $l->order) }}" class="my-2 flex flex-col items-center group-hover:scale-110 transition-transform">
+                        <!-- Letter Character (Clicking plays letter pronunciation audio) -->
+                        <button @click="playAudio('{{ $l->audio_url }}', '{{ $l->name_ar }}')" type="button" class="my-2 flex flex-col items-center group-hover:scale-110 active:scale-95 transition-transform cursor-pointer focus:outline-hidden" title="{{ __('Click to listen') }}: {{ $l->name_ar }}">
                             <span class="font-arabic text-4xl text-[#1A1D20] dark:text-white leading-none">
                                 {{ $l->character }}
                             </span>
-                        </a>
+                        </button>
 
-                        <!-- Names -->
-                        <div class="text-center w-full mt-1">
+                        <!-- Names (Clicking also plays audio) -->
+                        <button @click="playAudio('{{ $l->audio_url }}', '{{ $l->name_ar }}')" type="button" class="text-center w-full mt-1 cursor-pointer focus:outline-hidden">
                             <div class="text-xs font-semibold text-[#1A1D20] dark:text-white">
                                 {{ app()->getLocale() === 'bn' && $l->name_bn ? $l->name_bn : $l->name_latin }}
                             </div>
                             <div class="text-[11px] font-arabic text-[#687076] dark:text-[#94A3B8]">{{ $l->name_ar }}</div>
-                        </div>
+                        </button>
 
-                        <!-- Actions: Audio and Details -->
+                        <!-- Actions: Prominent Audio Button and Details Link -->
                         <div class="w-full mt-3 pt-2 border-t border-[#EBE6DE]/60 dark:border-[#212B3E]/60 flex items-center justify-between">
-                            <button @click="playAudio('{{ $l->audio_url }}', '{{ $l->name_ar }}')" type="button" title="{{ __('Listen') }}" class="p-1.5 rounded-lg text-[#687076] dark:text-[#94A3B8] hover:text-[#1B4D3E] dark:hover:text-emerald-400 hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] transition-colors">
+                            <button @click="playAudio('{{ $l->audio_url }}', '{{ $l->name_ar }}')" type="button" title="{{ __('Listen Pronunciation') }}" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg text-[#687076] dark:text-[#94A3B8] hover:text-[#1B4D3E] dark:hover:text-emerald-400 hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] active:scale-90 transition-all cursor-pointer">
                                 <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
                                 </svg>
+                                <span class="text-[10px] font-medium hidden sm:inline">{{ __('Play') }}</span>
                             </button>
                             <a href="{{ route('alphabet.show', $l->order) }}" title="{{ __('Positional Forms') }}" class="text-[10px] font-medium text-[#1B4D3E] dark:text-emerald-400 hover:underline">
                                 {{ app()->getLocale() === 'bn' ? '৪টি রূপ' : '4 Forms' }} &rarr;
@@ -70,10 +79,10 @@
                     <div class="rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 space-y-4 hover:border-[#1B4D3E]/40 dark:hover:border-emerald-500/40 transition-colors shadow-xs">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3.5">
-                                <!-- Canonical Diacritic Carrier Tile -->
-                                <div class="w-16 h-16 rounded-2xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-center font-arabic text-4xl text-[#9A722C] dark:text-amber-400 select-none shadow-xs">
-                                    <span class="leading-none">&#x25CC;{{ $h->symbol }}</span>
-                                </div>
+                                <!-- Canonical Diacritic Carrier Tile (Using Tatweel carrier for authentic font rendering) -->
+                                <button @click="playAudio('{{ $h->audio_url }}', '{{ $h->name_ar }}')" type="button" class="w-16 h-16 rounded-2xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-center font-arabic text-4xl text-[#9A722C] dark:text-amber-400 select-none shadow-xs hover:scale-105 active:scale-95 transition-transform cursor-pointer" title="{{ __('Click to listen') }}: {{ $h->name_ar }}">
+                                    <span class="leading-none">&#x0640;{{ $h->symbol }}&#x0640;</span>
+                                </button>
                                 <div>
                                     <h3 class="text-base font-semibold text-[#1A1D20] dark:text-white">
                                         {{ app()->getLocale() === 'bn' && $h->name_bn ? $h->name_bn : $h->name }}
@@ -81,9 +90,17 @@
                                     <div class="text-sm font-arabic text-[#1B4D3E] dark:text-emerald-400">{{ $h->name_ar }}</div>
                                 </div>
                             </div>
-                            <span class="text-xs px-2.5 py-1 rounded-full bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] text-[#687076] dark:text-[#94A3B8] font-mono">
-                                #{{ $h->order }}
-                            </span>
+
+                            <div class="flex items-center gap-2">
+                                <button @click="playAudio('{{ $h->audio_url }}', '{{ $h->name_ar }}')" type="button" class="p-2 rounded-xl text-[#687076] dark:text-[#94A3B8] hover:text-[#1B4D3E] dark:hover:text-emerald-400 hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] border border-transparent hover:border-[#EBE6DE] dark:hover:border-[#212B3E] transition-colors cursor-pointer" title="{{ __('Listen') }}">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+                                    </svg>
+                                </button>
+                                <span class="text-xs px-2.5 py-1 rounded-full bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] text-[#687076] dark:text-[#94A3B8] font-mono">
+                                    #{{ $h->order }}
+                                </span>
+                            </div>
                         </div>
 
                         <p class="text-sm text-[#687076] dark:text-[#94A3B8] leading-relaxed">

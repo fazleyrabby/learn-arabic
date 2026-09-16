@@ -31,10 +31,10 @@
                 Letter {{ $letter->order }} of 28
             </span>
 
-            <!-- Huge Arabic Glyph -->
-            <div class="my-4 font-arabic text-8xl sm:text-9xl text-[#1A1D20] dark:text-white leading-tight selection:bg-transparent">
+            <!-- Huge Arabic Glyph (Clicking plays audio) -->
+            <button @click="playAudio('{{ $letter->audio_url }}', '{{ $letter->name_ar }}')" type="button" class="my-4 font-arabic text-8xl sm:text-9xl text-[#1A1D20] dark:text-white leading-tight selection:bg-transparent hover:scale-105 active:scale-95 transition-transform cursor-pointer focus:outline-hidden" title="{{ __('Click to listen') }}: {{ $letter->name_ar }}">
                 {{ $letter->character }}
-            </div>
+            </button>
 
             <h1 class="text-2xl font-bold text-[#1A1D20] dark:text-white tracking-tight flex items-center gap-3">
                 <span>{{ app()->getLocale() === 'bn' && $letter->name_bn ? $letter->name_bn : $letter->name_latin }}</span>

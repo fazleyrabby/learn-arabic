@@ -29,13 +29,13 @@
             @forelse ($vocabularies as $word)
                 <div class="group rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-5 flex flex-col justify-between hover:border-[#1B4D3E]/40 dark:hover:border-emerald-500/40 hover:shadow-xs transition-all duration-150">
                     <!-- Top Bar: Part of Speech & Frequency -->
-                    <div class="flex items-center justify-between text-[11px]">
-                        <span class="px-2 py-0.5 rounded-md bg-[#FAF8F5] dark:bg-[#0B0F19] text-[#687076] dark:text-[#94A3B8] border border-[#EBE6DE] dark:border-[#212B3E] font-medium capitalize">
-                            {{ $word->part_of_speech ?? 'word' }}
+                    <div class="flex items-center justify-between gap-2 min-w-0">
+                        <span class="truncate px-2 py-0.5 rounded-md bg-[#FAF8F5] dark:bg-[#0B0F19] text-[#687076] dark:text-[#94A3B8] border border-[#EBE6DE] dark:border-[#212B3E] font-medium text-[10px] capitalize" title="{{ $word->part_of_speech }}">
+                            {{ $word->part_of_speech == 'relative pronoun / particle' ? 'Rel. Pronoun / Particle' : ($word->part_of_speech ?? 'word') }}
                         </span>
 
-                        <span class="font-mono text-[10px] text-[#1B4D3E] dark:text-emerald-400 font-semibold bg-[#1B4D3E]/10 dark:bg-emerald-400/10 px-2 py-0.5 rounded-full">
-                            {{ number_format($word->frequency) }}x in Quran
+                        <span class="shrink-0 font-mono text-[10px] text-[#1B4D3E] dark:text-emerald-400 font-semibold bg-[#1B4D3E]/10 dark:bg-emerald-400/10 px-2 py-0.5 rounded-full whitespace-nowrap" title="{{ number_format($word->frequency) }} times in Quran">
+                            {{ number_format($word->frequency) }}x
                         </span>
                     </div>
 
