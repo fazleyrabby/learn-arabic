@@ -39,14 +39,14 @@
             </div>
 
             <!-- Tab Switcher -->
-            <div class="flex items-center p-1 rounded-xl bg-[#EAE5DB]/60 dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] self-start sm:self-auto overflow-x-auto">
-                <button @click="activeTab = 'kids'" :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-bold': activeTab === 'kids', 'text-[#687076] dark:text-[#94A3B8]': activeTab !== 'kids' }" class="px-4 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
+            <div class="flex items-center p-1 rounded-xl bg-[#EAE5DB]/60 dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] self-start sm:self-auto overflow-x-auto max-w-full">
+                <button @click="activeTab = 'kids'" :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-bold': activeTab === 'kids', 'text-[#687076] dark:text-[#94A3B8]': activeTab !== 'kids' }" class="px-3.5 sm:px-4 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     🎈 {{ app()->getLocale() === 'bn' ? 'শিশুদের সাউন্ডবোর্ড' : 'Kids Soundboard' }}
                 </button>
-                <button @click="activeTab = 'letters'" :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-semibold': activeTab === 'letters', 'text-[#687076] dark:text-[#94A3B8]': activeTab !== 'letters' }" class="px-4 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
+                <button @click="activeTab = 'letters'" :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-semibold': activeTab === 'letters', 'text-[#687076] dark:text-[#94A3B8]': activeTab !== 'letters' }" class="px-3.5 sm:px-4 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     {{ app()->getLocale() === 'bn' ? '২৮টি হরফ ও মাখরাজ' : '28 Letters Table' }}
                 </button>
-                <button @click="activeTab = 'harakat'" :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-semibold': activeTab === 'harakat', 'text-[#687076] dark:text-[#94A3B8]': activeTab !== 'harakat' }" class="px-4 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
+                <button @click="activeTab = 'harakat'" :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-semibold': activeTab === 'harakat', 'text-[#687076] dark:text-[#94A3B8]': activeTab !== 'harakat' }" class="px-3.5 sm:px-4 py-1.5 rounded-lg text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     {{ app()->getLocale() === 'bn' ? 'হরকত (স্বরচিহ্ন)' : 'Harakat (Vowels)' }}
                 </button>
             </div>
@@ -55,13 +55,13 @@
         <!-- KIDS SOUNDBOARD TAB (Delightful for 5-year-olds!) -->
         <div x-show="activeTab === 'kids'" class="space-y-8">
             <!-- Kids Interactive Harakat Mixer Station (Ba - Bi - Bu) -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-50 via-white to-emerald-50 dark:from-[#131926] dark:via-[#111723] dark:to-[#0B0F19] border-2 border-amber-300 dark:border-amber-700/60 p-6 sm:p-8 shadow-sm">
-                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-amber-50 via-white to-emerald-50 dark:from-[#131926] dark:via-[#111723] dark:to-[#0B0F19] border-2 border-amber-300 dark:border-amber-700/60 p-4 sm:p-8 shadow-sm">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-5 sm:gap-6">
                     <div class="space-y-2 text-center md:text-left">
                         <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-200/60 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300">
                             <span>🎵 {{ app()->getLocale() === 'bn' ? 'হরকত ম্যাজিক সাউন্ড (বা - বি - বু)' : 'Vowel Magic (Ba - Bi - Bu Sound Machine)' }}</span>
                         </div>
-                        <h2 class="text-xl sm:text-2xl font-bold text-[#181C1E] dark:text-white">
+                        <h2 class="text-lg sm:text-2xl font-bold text-[#181C1E] dark:text-white">
                             {{ app()->getLocale() === 'bn' ? 'হরকতের সাথে হরফ মিলিয়ে শুনুন' : 'Mix Letters with Vowels' }}
                         </h2>
                         <p class="text-xs text-[#5C656C] dark:text-[#94A3B8] max-w-md">
@@ -70,56 +70,56 @@
                     </div>
 
                     <!-- Active Letter Display + Harakat Action Buttons -->
-                    <div class="flex items-center gap-3">
+                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto justify-center">
                         <!-- Big Selected Letter Tile -->
-                        <div class="w-24 h-24 rounded-3xl bg-white dark:bg-[#1B2332] border-2 border-amber-400 dark:border-amber-500 flex flex-col items-center justify-center shadow-md select-none">
-                            <span class="font-arabic text-5xl text-[#181C1E] dark:text-white leading-none" x-text="selectedLetterChar"></span>
-                            <span class="text-[11px] font-bold text-[#1B4D3E] dark:text-emerald-400 mt-1" x-text="selectedLetterBn"></span>
+                        <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white dark:bg-[#1B2332] border-2 border-amber-400 dark:border-amber-500 flex flex-col items-center justify-center shadow-md select-none shrink-0">
+                            <span class="font-arabic text-4xl sm:text-5xl text-[#181C1E] dark:text-white leading-none" x-text="selectedLetterChar"></span>
+                            <span class="text-[10px] sm:text-[11px] font-bold text-[#1B4D3E] dark:text-emerald-400 mt-1" x-text="selectedLetterBn"></span>
                         </div>
 
                         <!-- 3 Big Tactile Harakat Buttons -->
-                        <div class="flex flex-col sm:flex-row gap-2">
+                        <div class="grid grid-cols-3 sm:flex gap-2 w-full sm:w-auto">
                             <!-- Fathah (A sound) -->
                             <button @click="mixHarakat('َ', 'Fatḥah', 'a', 'আ')" 
                                     type="button" 
-                                    class="px-4 py-2.5 rounded-2xl bg-red-50 dark:bg-red-950/40 border-2 border-red-300 dark:border-red-700 hover:bg-red-100 hover:scale-105 active:scale-95 transition-all text-center cursor-pointer shadow-xs">
-                                <div class="font-arabic text-2xl text-red-600 dark:text-red-400 leading-none">&#x0640;َ</div>
-                                <div class="text-[11px] font-bold text-red-700 dark:text-red-300 mt-0.5">{{ app()->getLocale() === 'bn' ? 'জবর (আ)' : 'Fatḥah (A)' }}</div>
+                                    class="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-red-50 dark:bg-red-950/40 border-2 border-red-300 dark:border-red-700 hover:bg-red-100 hover:scale-105 active:scale-95 transition-all text-center cursor-pointer shadow-xs">
+                                <div class="font-arabic text-xl sm:text-2xl text-red-600 dark:text-red-400 leading-none">&#x0640;َ</div>
+                                <div class="text-[10px] sm:text-[11px] font-bold text-red-700 dark:text-red-300 mt-0.5 truncate">{{ app()->getLocale() === 'bn' ? 'জবর (আ)' : 'Fatḥah (A)' }}</div>
                             </button>
 
                             <!-- Kasrah (I sound) -->
                             <button @click="mixHarakat('ِ', 'Kasrah', 'i', 'ই')" 
                                     type="button" 
-                                    class="px-4 py-2.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border-2 border-blue-300 dark:border-blue-700 hover:bg-blue-100 hover:scale-105 active:scale-95 transition-all text-center cursor-pointer shadow-xs">
-                                <div class="font-arabic text-2xl text-blue-600 dark:text-blue-400 leading-none">&#x0640;ِ</div>
-                                <div class="text-[11px] font-bold text-blue-700 dark:text-blue-300 mt-0.5">{{ app()->getLocale() === 'bn' ? 'জের (ই)' : 'Kasrah (I)' }}</div>
+                                    class="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-blue-50 dark:bg-blue-950/40 border-2 border-blue-300 dark:border-blue-700 hover:bg-blue-100 hover:scale-105 active:scale-95 transition-all text-center cursor-pointer shadow-xs">
+                                <div class="font-arabic text-xl sm:text-2xl text-blue-600 dark:text-blue-400 leading-none">&#x0640;ِ</div>
+                                <div class="text-[10px] sm:text-[11px] font-bold text-blue-700 dark:text-blue-300 mt-0.5 truncate">{{ app()->getLocale() === 'bn' ? 'জের (ই)' : 'Kasrah (I)' }}</div>
                             </button>
 
                             <!-- Dammah (U sound) -->
                             <button @click="mixHarakat('ُ', 'Ḍammah', 'u', 'উ')" 
                                     type="button" 
-                                    class="px-4 py-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-300 dark:border-emerald-700 hover:bg-emerald-100 hover:scale-105 active:scale-95 transition-all text-center cursor-pointer shadow-xs">
-                                <div class="font-arabic text-2xl text-emerald-600 dark:text-emerald-400 leading-none">&#x0640;ُ</div>
-                                <div class="text-[11px] font-bold text-emerald-700 dark:text-emerald-300 mt-0.5">{{ app()->getLocale() === 'bn' ? 'পেশ (উ)' : 'Ḍammah (U)' }}</div>
+                                    class="px-2.5 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border-2 border-emerald-300 dark:border-emerald-700 hover:bg-emerald-100 hover:scale-105 active:scale-95 transition-all text-center cursor-pointer shadow-xs">
+                                <div class="font-arabic text-xl sm:text-2xl text-emerald-600 dark:text-emerald-400 leading-none">&#x0640;ُ</div>
+                                <div class="text-[10px] sm:text-[11px] font-bold text-emerald-700 dark:text-emerald-300 mt-0.5 truncate">{{ app()->getLocale() === 'bn' ? 'পেশ (উ)' : 'Ḍammah (U)' }}</div>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <!-- Star Progress Counter for Kids -->
-                <div class="mt-4 pt-3 border-t border-amber-200/60 dark:border-amber-900/60 flex items-center justify-between text-xs">
+                <div class="mt-4 pt-3 border-t border-amber-200/60 dark:border-amber-900/60 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <span class="font-semibold text-amber-800 dark:text-amber-300 flex items-center gap-1">
-                        <span>⭐ {{ app()->getLocale() === 'bn' ? 'তোমার সংগৃহীত স্টার:' : 'Your Collected Stars:' }}</span>
+                        <span>⭐ {{ app()->getLocale() === 'bn' ? 'সংগৃহীত স্টার:' : 'Collected Stars:' }}</span>
                         <span class="font-mono font-bold" x-text="playedLetters.size + ' / 28'"></span>
                     </span>
-                    <span class="text-[11px] text-[#5C656C] dark:text-[#94A3B8]">
+                    <span class="text-[10px] sm:text-[11px] text-[#5C656C] dark:text-[#94A3B8]">
                         {{ app()->getLocale() === 'bn' ? 'সব হরফ শুনলে ২৮টি স্টার পাবে! 🏆' : 'Listen to all letters to earn 28 stars! 🏆' }}
                     </span>
                 </div>
             </div>
 
             <!-- Big Tactile 28 Alphabet Cards for Kids -->
-            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3 sm:gap-4">
+            <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5 sm:gap-4">
                 @foreach ($letters as $l)
                     <button @click="tapLetter({{ json_encode([
                         'order' => $l->order,
@@ -130,7 +130,7 @@
                         'audio_url' => $l->audio_url,
                     ]) }})" 
                             type="button" 
-                            class="group relative rounded-3xl p-4 sm:p-5 flex flex-col items-center justify-between border-2 transition-all duration-200 cursor-pointer select-none active:scale-90 hover:shadow-md"
+                            class="group relative rounded-3xl p-3 sm:p-5 flex flex-col items-center justify-between border-2 transition-all duration-200 cursor-pointer select-none active:scale-90 hover:shadow-md"
                             :class="selectedLetterChar === '{{ $l->character }}' 
                                 ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-400 dark:border-amber-500 ring-2 ring-amber-300/40 shadow-sm' 
                                 : 'bg-white dark:bg-[#131926] border-[#EBE6DE] dark:border-[#212B3E] hover:border-emerald-400'">

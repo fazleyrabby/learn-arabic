@@ -240,64 +240,64 @@
         </div>
 
         <!-- Sticky Player & Study Control Bar -->
-        <div class="sticky top-16 z-30 rounded-2xl bg-white/95 dark:bg-[#131926]/95 backdrop-blur-md border border-[#E8E2D8] dark:border-[#212B3E] p-3 sm:p-4 shadow-md flex flex-wrap items-center justify-between gap-3">
+        <div class="sticky top-16 z-30 rounded-2xl bg-white/95 dark:bg-[#131926]/95 backdrop-blur-md border border-[#E8E2D8] dark:border-[#212B3E] p-2.5 sm:p-4 shadow-md flex flex-wrap items-center justify-between gap-2 sm:gap-3">
             <!-- Audio Playback Controls -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 sm:gap-2">
                 <!-- Master Play / Pause Button -->
                 <button @click="togglePlayAll()" 
                         type="button" 
-                        class="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-white shadow-sm transition-all duration-150 active:scale-95 cursor-pointer"
+                        class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-xl text-xs font-bold text-white shadow-sm transition-all duration-150 active:scale-95 cursor-pointer"
                         :class="isPlayingAll ? 'bg-amber-600 hover:bg-amber-700' : 'bg-[#1B4D3E] hover:bg-[#153e32] dark:bg-emerald-600 dark:hover:bg-emerald-700'">
                     <template x-if="!isPlayingAll">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                            <span>{{ app()->getLocale() === 'bn' ? 'শুনুন' : 'Play All' }}</span>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                            <span>{{ app()->getLocale() === 'bn' ? 'শুনুন' : 'Play' }}</span>
                         </span>
                     </template>
                     <template x-if="isPlayingAll">
-                        <span class="flex items-center gap-1.5">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+                        <span class="flex items-center gap-1">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
                             <span>{{ app()->getLocale() === 'bn' ? 'বিরতি' : 'Pause' }}</span>
                         </span>
                     </template>
                 </button>
 
                 <!-- Prev / Next Ayah -->
-                <button @click="prevAyah()" type="button" class="p-2 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] text-[#5C656C] dark:text-[#94A3B8] transition-colors cursor-pointer" title="{{ __('Previous Ayah') }}">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
+                <button @click="prevAyah()" type="button" class="p-1.5 sm:p-2 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] text-[#5C656C] dark:text-[#94A3B8] transition-colors cursor-pointer" title="{{ __('Previous Ayah') }}">
+                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" /></svg>
                 </button>
-                <button @click="nextAyah()" type="button" class="p-2 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] text-[#5C656C] dark:text-[#94A3B8] transition-colors cursor-pointer" title="{{ __('Next Ayah') }}">
-                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
+                <button @click="nextAyah()" type="button" class="p-1.5 sm:p-2 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] text-[#5C656C] dark:text-[#94A3B8] transition-colors cursor-pointer" title="{{ __('Next Ayah') }}">
+                    <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" /></svg>
                 </button>
 
                 <!-- Repeat Mode Pill (Crucial for Kids Memorization!) -->
-                <button @click="cycleRepeat()" type="button" class="px-2.5 py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] text-xs font-semibold hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] transition-colors cursor-pointer flex items-center gap-1" :class="repeatMode !== '1x' ? 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-300' : 'text-[#5C656C] dark:text-[#94A3B8]'">
+                <button @click="cycleRepeat()" type="button" class="px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] text-xs font-semibold hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] transition-colors cursor-pointer flex items-center gap-1" :class="repeatMode !== '1x' ? 'text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/40 border-amber-300' : 'text-[#5C656C] dark:text-[#94A3B8]'">
                     <span>🔁</span>
-                    <span x-text="repeatMode === '1x' ? '1x' : (repeatMode === '3x' ? '3x (Memorize)' : 'Loop')"></span>
+                    <span x-text="repeatMode === '1x' ? '1x' : (repeatMode === '3x' ? '3x' : 'Loop')"></span>
                 </button>
 
                 <!-- Speed Control Pill -->
-                <button @click="cycleSpeed()" type="button" class="px-2.5 py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] text-xs font-semibold hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] transition-colors cursor-pointer flex items-center gap-1 text-[#5C656C] dark:text-[#94A3B8]">
+                <button @click="cycleSpeed()" type="button" class="px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] text-xs font-semibold hover:bg-[#FAF8F5] dark:hover:bg-[#0B0F19] transition-colors cursor-pointer flex items-center gap-0.5 text-[#5C656C] dark:text-[#94A3B8]">
                     <span>⚡</span>
                     <span x-text="playbackRate + 'x'"></span>
                 </button>
             </div>
 
             <!-- Visual Options (Font Size & Translation Filter) -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 sm:gap-2">
                 <!-- Font Size Selector -->
                 <div class="flex items-center rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-[#FAF8F5] dark:bg-[#0B0F19] p-0.5 text-xs font-bold">
-                    <button @click="fontSize = 'md'" :class="{ 'bg-white dark:bg-[#1E2738] text-[#181C1E] dark:text-white shadow-xs': fontSize === 'md', 'text-[#5C656C] dark:text-[#94A3B8]': fontSize !== 'md' }" class="px-2 py-1 rounded-lg cursor-pointer">A</button>
-                    <button @click="fontSize = 'xl'" :class="{ 'bg-white dark:bg-[#1E2738] text-[#181C1E] dark:text-white shadow-xs': fontSize === 'xl', 'text-[#5C656C] dark:text-[#94A3B8]': fontSize !== 'xl' }" class="px-2 py-1 rounded-lg cursor-pointer">A+</button>
-                    <button @click="fontSize = '2xl'" :class="{ 'bg-white dark:bg-[#1E2738] text-[#181C1E] dark:text-white shadow-xs': fontSize === '2xl', 'text-[#5C656C] dark:text-[#94A3B8]': fontSize !== '2xl' }" class="px-2.5 py-1 rounded-lg cursor-pointer">👶 Kids</button>
+                    <button @click="fontSize = 'md'" :class="{ 'bg-white dark:bg-[#1E2738] text-[#181C1E] dark:text-white shadow-xs': fontSize === 'md', 'text-[#5C656C] dark:text-[#94A3B8]': fontSize !== 'md' }" class="px-1.5 sm:px-2 py-1 rounded-lg cursor-pointer">A</button>
+                    <button @click="fontSize = 'xl'" :class="{ 'bg-white dark:bg-[#1E2738] text-[#181C1E] dark:text-white shadow-xs': fontSize === 'xl', 'text-[#5C656C] dark:text-[#94A3B8]': fontSize !== 'xl' }" class="px-1.5 sm:px-2 py-1 rounded-lg cursor-pointer">A+</button>
+                    <button @click="fontSize = '2xl'" :class="{ 'bg-white dark:bg-[#1E2738] text-[#181C1E] dark:text-white shadow-xs': fontSize === '2xl', 'text-[#5C656C] dark:text-[#94A3B8]': fontSize !== '2xl' }" class="px-2 sm:px-2.5 py-1 rounded-lg cursor-pointer">👶 Kids</button>
                 </div>
 
                 <!-- Translation Filter Dropdown / Pill -->
-                <select x-model="translationMode" class="px-2.5 py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] bg-[#FAF8F5] dark:bg-[#0B0F19] text-xs font-medium text-[#181C1E] dark:text-white focus:outline-hidden cursor-pointer">
+                <select x-model="translationMode" class="px-2 py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#212B3E] bg-[#FAF8F5] dark:bg-[#0B0F19] text-xs font-medium text-[#181C1E] dark:text-white focus:outline-hidden cursor-pointer max-w-[130px] sm:max-w-none">
                     <option value="both">{{ app()->getLocale() === 'bn' ? 'বাংলা ও ইংরেজি' : 'English & Bengali' }}</option>
                     <option value="bn">বাংলা অনুবাদ</option>
                     <option value="en">English Only</option>
-                    <option value="none">{{ app()->getLocale() === 'bn' ? 'শুধু আরবি (হিফজ)' : 'Arabic Only (Reading)' }}</option>
+                    <option value="none">{{ app()->getLocale() === 'bn' ? 'শুধু আরবি (হিফজ)' : 'Arabic Only' }}</option>
                 </select>
             </div>
         </div>

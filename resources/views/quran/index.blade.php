@@ -23,8 +23,8 @@
     }" class="space-y-8">
 
         <!-- Kid-Friendly Welcoming Banner -->
-        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1B4D3E] via-[#164033] to-[#0E2921] p-6 sm:p-10 text-white shadow-lg">
-            <div class="absolute -right-8 -bottom-10 opacity-10 text-9xl font-arabic pointer-events-none select-none">
+        <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1B4D3E] via-[#164033] to-[#0E2921] p-5 sm:p-10 text-white shadow-lg">
+            <div class="absolute -right-8 -bottom-10 opacity-10 text-8xl sm:text-9xl font-arabic pointer-events-none select-none">
                 القرآن
             </div>
             
@@ -35,23 +35,23 @@
                     <span>{{ app()->getLocale() === 'bn' ? '৫ বছর বয়সীদের জন্যও সহজ' : 'Kids Friendly & Accessible' }}</span>
                 </div>
 
-                <h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">
+                <h1 class="text-2xl sm:text-4xl font-bold tracking-tight text-white">
                     {{ app()->getLocale() === 'bn' ? 'পবিত্র কুরআন স্টুডিও' : 'The Holy Quran Studio' }}
                 </h1>
 
-                <p class="text-sm sm:text-base text-emerald-100/85 leading-relaxed">
+                <p class="text-xs sm:text-base text-emerald-100/85 leading-relaxed">
                     {{ app()->getLocale() === 'bn' 
                         ? '১১৪টি সূরা বিশুদ্ধ তেলাওয়াতসহ শুনুন এবং প্রতিটি শব্দে স্পর্শ করে উচ্চারণ ও বাংলা অর্থ শিখুন।' 
                         : 'Explore all 114 Surahs with crystal-clear recitation. Tap any word to hear exact pronunciation and learn its meaning.' }}
                 </p>
 
                 <!-- Quick Action Buttons -->
-                <div class="pt-2 flex flex-wrap items-center gap-3">
-                    <a href="{{ route('quran.show', 1) }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white text-[#1B4D3E] text-xs font-bold shadow-md hover:bg-emerald-50 active:scale-95 transition-all">
+                <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
+                    <a href="{{ route('quran.show', 1) }}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-white text-[#1B4D3E] text-xs font-bold shadow-md hover:bg-emerald-50 active:scale-95 transition-all text-center">
                         <span>▶</span>
                         <span>{{ app()->getLocale() === 'bn' ? 'সূরা আল-ফাতিহা শুরু করুন' : 'Start with Surah Al-Fatihah' }}</span>
                     </a>
-                    <a href="{{ route('quran.show', 112) }}" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-emerald-950/60 border border-emerald-400/30 text-emerald-200 text-xs font-semibold hover:bg-emerald-900/60 active:scale-95 transition-all">
+                    <a href="{{ route('quran.show', 112) }}" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-2xl bg-emerald-950/60 border border-emerald-400/30 text-emerald-200 text-xs font-semibold hover:bg-emerald-900/60 active:scale-95 transition-all text-center">
                         <span>⭐</span>
                         <span>{{ app()->getLocale() === 'bn' ? 'সূরা আল-ইখলাস (৪ কুল)' : 'Surah Al-Ikhlas (4 Quls)' }}</span>
                     </a>
@@ -60,28 +60,28 @@
         </div>
 
         <!-- Navigation Tabs & Search Controls -->
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b border-[#E8E2D8] dark:border-[#1E2738] pb-4">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4 border-b border-[#E8E2D8] dark:border-[#1E2738] pb-4">
             <!-- Filter Pills -->
-            <div class="flex items-center gap-1.5 p-1 rounded-2xl bg-[#EAE5DB]/70 dark:bg-[#131926] border border-[#E8E2D8] dark:border-[#212B3E] overflow-x-auto">
+            <div class="flex items-center gap-1.5 p-1 rounded-2xl bg-[#EAE5DB]/70 dark:bg-[#131926] border border-[#E8E2D8] dark:border-[#212B3E] overflow-x-auto max-w-full">
                 <button @click="activeTab = 'kids'" 
                         :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-bold': activeTab === 'kids', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'kids' }"
-                        class="px-4 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
+                        class="px-3 sm:px-4 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     ⭐ {{ app()->getLocale() === 'bn' ? 'ছোটদের প্রিয় সূরা (১১টি)' : 'Kids Favorites (11 Surahs)' }}
                 </button>
                 <button @click="activeTab = 'juz_amma'" 
                         :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-bold': activeTab === 'juz_amma', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'juz_amma' }"
-                        class="px-4 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
-                    🌙 {{ app()->getLocale() === 'bn' ? 'পারা ৩০ (ছোট সূরাসমূহ)' : "Juz 'Amma (78-114)" }}
+                        class="px-3 sm:px-4 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
+                    🌙 {{ app()->getLocale() === 'bn' ? 'পারা ৩০' : "Juz 'Amma (78-114)" }}
                 </button>
                 <button @click="activeTab = 'all'" 
                         :class="{ 'bg-white dark:bg-[#1B2332] text-[#1A1D20] dark:text-white shadow-xs font-bold': activeTab === 'all', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'all' }"
-                        class="px-4 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
+                        class="px-3 sm:px-4 py-2 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     📖 {{ app()->getLocale() === 'bn' ? 'সকল ১১৪টি সূরা' : 'All 114 Surahs' }}
                 </button>
             </div>
 
             <!-- Search Input -->
-            <div class="relative min-w-[260px] sm:min-w-[320px]">
+            <div class="relative w-full md:w-auto md:min-w-[300px]">
                 <input type="text" 
                        x-model="search"
                        placeholder="{{ app()->getLocale() === 'bn' ? 'সূরার নাম বা নম্বর দিয়ে খুঁজুন...' : 'Search Surah by name or number...' }}"
@@ -93,7 +93,7 @@
         </div>
 
         <!-- Surahs Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             @foreach ($surahs as $surah)
                 <div x-show="matches({{ json_encode([
                     'number' => $surah->number,
@@ -105,7 +105,7 @@
                 x-transition:enter="transition ease-out duration-150"
                 x-transition:enter-start="opacity-0 scale-95"
                 x-transition:enter-end="opacity-100 scale-100"
-                class="group relative rounded-3xl bg-white dark:bg-[#131926] border border-[#E8E2D8] dark:border-[#212B3E] p-5 sm:p-6 flex flex-col justify-between hover:border-[#1B4D3E]/50 dark:hover:border-emerald-500/50 hover:shadow-md transition-all duration-200">
+                class="group relative rounded-3xl bg-white dark:bg-[#131926] border border-[#E8E2D8] dark:border-[#212B3E] p-4 sm:p-6 flex flex-col justify-between hover:border-[#1B4D3E]/50 dark:hover:border-emerald-500/50 hover:shadow-md transition-all duration-200">
                     
                     <div>
                         <!-- Header Row: Number Badge, Revelation, Arabic Calligraphy -->

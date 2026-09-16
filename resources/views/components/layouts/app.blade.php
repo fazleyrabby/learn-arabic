@@ -110,13 +110,13 @@ class="h-full scroll-smooth"
     <header class="sticky top-0 z-40 backdrop-blur-md bg-[#FAF8F5]/85 dark:bg-[#090D16]/85 border-b border-[#E8E2D8] dark:border-[#1E2738]">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
             <!-- Brand -->
-            <a href="{{ route('dashboard') }}" class="flex items-center gap-3 group">
-                <div class="w-9 h-9 rounded-xl bg-[#1B4D3E] text-[#FAF8F5] flex items-center justify-center font-arabic text-xl font-bold shadow-xs group-hover:scale-105 transition-transform duration-150">
+            <a href="{{ route('dashboard') }}" class="flex items-center gap-2.5 sm:gap-3 group shrink-0 min-w-0">
+                <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#1B4D3E] text-[#FAF8F5] flex items-center justify-center font-arabic text-lg sm:text-xl font-bold shadow-xs group-hover:scale-105 transition-transform duration-150 shrink-0">
                     ق
                 </div>
-                <div class="flex flex-col">
-                    <span class="font-display font-semibold text-sm tracking-wide text-[#181C1E] dark:text-white">QURANIC ARABIC</span>
-                    <span class="text-[11px] font-arabic text-[#5C656C] dark:text-[#94A3B8] font-normal tracking-wide">الْعَرَبِيَّةُ لِلْقُرْآن</span>
+                <div class="flex flex-col min-w-0">
+                    <span class="font-display font-semibold text-xs sm:text-sm tracking-wide text-[#181C1E] dark:text-white truncate">QURANIC ARABIC</span>
+                    <span class="text-[10px] sm:text-[11px] font-arabic text-[#5C656C] dark:text-[#94A3B8] font-normal tracking-wide hidden xs:inline truncate">الْعَرَبِيَّةُ لِلْقُرْآن</span>
                 </div>
             </a>
 
@@ -147,7 +147,7 @@ class="h-full scroll-smooth"
             </nav>
 
             <!-- Actions: Language Switcher, Arabic Font, Theme, Mobile Hamburger -->
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <!-- Language Switcher (English / Bengali) -->
                 <div class="flex items-center rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 p-0.5 text-xs font-medium">
                     <a href="{{ route('locale.switch', 'en') }}" class="px-2 py-1 rounded-lg transition-colors {{ app()->getLocale() === 'en' ? 'bg-[#1B4D3E] text-white font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white' }}" title="Switch to English">
@@ -158,8 +158,8 @@ class="h-full scroll-smooth"
                     </a>
                 </div>
 
-                <!-- Arabic Font Selector Dropdown -->
-                <div class="relative" @click.outside="fontMenuOpen = false">
+                <!-- Arabic Font Selector Dropdown (Accessible in header on sm+, accessible in drawer on mobile) -->
+                <div class="relative hidden sm:block" @click.outside="fontMenuOpen = false">
                     <button @click="fontMenuOpen = !fontMenuOpen" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 hover:bg-[#EAE4D9]/50 dark:hover:bg-[#141C2B] text-xs font-medium text-[#181C1E] dark:text-white transition-colors" title="{{ __('Select Quranic Font') }}">
                         <span class="font-arabic text-sm text-[#1B4D3E] dark:text-emerald-400">خط</span>
                         <span class="hidden sm:inline text-xs" x-text="arabicFont === 'amiri' ? 'Amiri' : (arabicFont === 'scheherazade' ? 'Scheherazade' : (arabicFont === 'noto' ? 'Noto Naskh' : 'Lateef'))"></span>
@@ -261,19 +261,20 @@ class="h-full scroll-smooth"
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="translate-x-0"
          x-transition:leave-end="translate-x-full"
-         class="fixed inset-y-0 right-0 max-w-xs w-full bg-[#FAF8F5] dark:bg-[#0E1420] border-l border-[#E8E2D8] dark:border-[#1E2738] shadow-2xl z-50 p-6 flex flex-col justify-between overflow-y-auto lg:hidden"
+         @keydown.window.escape="mobileDrawerOpen = false"
+         class="fixed inset-y-0 right-0 max-w-[300px] sm:max-w-xs w-full bg-[#FAF8F5] dark:bg-[#0E1420] border-l border-[#E8E2D8] dark:border-[#1E2738] shadow-2xl z-50 p-5 sm:p-6 flex flex-col justify-between overflow-y-auto lg:hidden"
          style="display: none;">
         
         <div class="space-y-6">
             <!-- Drawer Header -->
             <div class="flex items-center justify-between pb-4 border-b border-[#E8E2D8] dark:border-[#1E2738]">
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-[#1B4D3E] text-white flex items-center justify-center font-arabic text-lg font-bold">
                         ق
                     </div>
                     <span class="font-display font-semibold text-sm text-[#181C1E] dark:text-white">{{ __('Quranic Arabic') }}</span>
                 </div>
-                <button @click="mobileDrawerOpen = false" type="button" class="p-2 rounded-xl text-[#5C656C] dark:text-[#94A3B8] hover:bg-[#EAE4D9]/60 dark:hover:bg-[#141C2B] transition-colors">
+                <button @click="mobileDrawerOpen = false" type="button" class="p-2 rounded-xl text-[#5C656C] dark:text-[#94A3B8] hover:bg-[#EAE4D9]/60 dark:hover:bg-[#141C2B] transition-colors" title="Close Menu">
                     <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                     </svg>
@@ -401,14 +402,14 @@ class="h-full scroll-smooth"
     </div>
 
     <!-- Main Content with Mobile Bottom Padding -->
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 pb-24 lg:pb-10">
+    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 pb-[calc(5.5rem+env(safe-area-inset-bottom,0px))] lg:pb-10">
         {{ $slot }}
     </main>
 
     <!-- Persistent Mobile Bottom Navigation Bar -->
-    <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF8F5]/95 dark:bg-[#090D16]/95 backdrop-blur-lg border-t border-[#E8E2D8] dark:border-[#1E2738] px-2 py-2 flex items-center justify-around shadow-lg">
+    <nav class="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#FAF8F5]/95 dark:bg-[#090D16]/95 backdrop-blur-lg border-t border-[#E8E2D8] dark:border-[#1E2738] px-2 py-1.5 flex items-center justify-around shadow-lg" style="padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));">
         <!-- Path -->
-        <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-1 px-2 py-1 rounded-xl {{ request()->routeIs('dashboard') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
+        <a href="{{ route('dashboard') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-colors {{ request()->routeIs('dashboard') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
             </svg>
@@ -416,21 +417,19 @@ class="h-full scroll-smooth"
         </a>
 
         <!-- Alphabet -->
-        <a href="{{ route('alphabet.index') }}" class="flex flex-col items-center gap-1 px-2 py-1 rounded-xl {{ request()->routeIs('alphabet.*') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
+        <a href="{{ route('alphabet.index') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-colors {{ request()->routeIs('alphabet.*') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
             <span class="font-arabic text-base font-bold leading-none h-5 flex items-center">أ</span>
             <span class="text-[10px]">{{ __('Alphabet') }}</span>
         </a>
 
-        <!-- Reading Studio -->
-        <a href="{{ route('reading.index') }}" class="flex flex-col items-center gap-1 px-2 py-1 rounded-xl {{ request()->routeIs('reading.*') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
-            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
-            </svg>
-            <span class="text-[10px]">{{ __('Studio') }}</span>
+        <!-- Quran Studio -->
+        <a href="{{ route('quran.index') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-colors {{ request()->routeIs('quran.*') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
+            <span class="font-arabic text-sm font-bold leading-none h-5 flex items-center">القرآن</span>
+            <span class="text-[10px]">{{ __('Quran') }}</span>
         </a>
 
         <!-- Vocabulary -->
-        <a href="{{ route('vocabulary.index') }}" class="flex flex-col items-center gap-1 px-2 py-1 rounded-xl {{ request()->routeIs('vocabulary.*') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
+        <a href="{{ route('vocabulary.index') }}" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl transition-colors {{ request()->routeIs('vocabulary.*') ? 'text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8]' }}">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
             </svg>
@@ -438,7 +437,7 @@ class="h-full scroll-smooth"
         </a>
 
         <!-- More Drawer Trigger -->
-        <button @click="mobileDrawerOpen = true" type="button" class="flex flex-col items-center gap-1 px-2 py-1 rounded-xl text-[#5C656C] dark:text-[#94A3B8]">
+        <button @click="mobileDrawerOpen = true" type="button" class="flex flex-col items-center gap-0.5 px-2 py-1 rounded-xl text-[#5C656C] dark:text-[#94A3B8] transition-colors" title="More Options">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
             </svg>

@@ -37,21 +37,21 @@
             </p>
 
             <!-- Level Selector -->
-            <div class="inline-flex items-center p-1 rounded-2xl bg-[#EAE4D9]/60 dark:bg-[#111723] border border-[#E8E2D8] dark:border-[#1E2738] mt-3">
-                <button @click="switchTab('syllables')" :class="{ 'bg-white dark:bg-[#182030] text-[#181C1E] dark:text-white shadow-xs font-semibold': activeTab === 'syllables', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'syllables' }" class="px-4 py-1.5 rounded-xl text-xs transition-all duration-150">
+            <div class="inline-flex items-center p-1 rounded-2xl bg-[#EAE4D9]/60 dark:bg-[#111723] border border-[#E8E2D8] dark:border-[#1E2738] mt-3 max-w-full overflow-x-auto">
+                <button @click="switchTab('syllables')" :class="{ 'bg-white dark:bg-[#182030] text-[#181C1E] dark:text-white shadow-xs font-semibold': activeTab === 'syllables', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'syllables' }" class="px-3 sm:px-4 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     1. Syllables
                 </button>
-                <button @click="switchTab('two_letters')" :class="{ 'bg-white dark:bg-[#182030] text-[#181C1E] dark:text-white shadow-xs font-semibold': activeTab === 'two_letters', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'two_letters' }" class="px-4 py-1.5 rounded-xl text-xs transition-all duration-150">
+                <button @click="switchTab('two_letters')" :class="{ 'bg-white dark:bg-[#182030] text-[#181C1E] dark:text-white shadow-xs font-semibold': activeTab === 'two_letters', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'two_letters' }" class="px-3 sm:px-4 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     2. Two-Letter Blends
                 </button>
-                <button @click="switchTab('three_letters')" :class="{ 'bg-white dark:bg-[#182030] text-[#181C1E] dark:text-white shadow-xs font-semibold': activeTab === 'three_letters', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'three_letters' }" class="px-4 py-1.5 rounded-xl text-xs transition-all duration-150">
+                <button @click="switchTab('three_letters')" :class="{ 'bg-white dark:bg-[#182030] text-[#181C1E] dark:text-white shadow-xs font-semibold': activeTab === 'three_letters', 'text-[#5C656C] dark:text-[#94A3B8]': activeTab !== 'three_letters' }" class="px-3 sm:px-4 py-1.5 rounded-xl text-xs whitespace-nowrap transition-all duration-150 cursor-pointer">
                     3. Trilateral Words
                 </button>
             </div>
         </div>
 
         <!-- Interactive Practice Card -->
-        <div class="rounded-3xl bg-white dark:bg-[#111723] border border-[#E8E2D8] dark:border-[#1E2738] p-8 sm:p-12 flex flex-col items-center justify-between min-h-[420px] shadow-xs text-center relative overflow-hidden">
+        <div class="rounded-3xl bg-white dark:bg-[#111723] border border-[#E8E2D8] dark:border-[#1E2738] p-5 sm:p-12 flex flex-col items-center justify-between min-h-[380px] sm:min-h-[420px] shadow-xs text-center relative overflow-hidden">
             <!-- Top Progress Indicator -->
             <div class="w-full flex items-center justify-between text-xs font-mono text-[#5C656C] dark:text-[#94A3B8]">
                 <span x-text="levels[activeTab].title"></span>
@@ -59,14 +59,14 @@
             </div>
 
             <!-- Target Arabic Word -->
-            <div class="my-8">
-                <div class="font-arabic text-8xl sm:text-9xl text-[#181C1E] dark:text-white leading-relaxed select-none transition-all duration-200" x-text="currentItem.text"></div>
+            <div class="my-6 sm:my-8">
+                <div class="font-arabic text-6xl sm:text-8xl md:text-9xl text-[#181C1E] dark:text-white leading-relaxed select-none transition-all duration-200" x-text="currentItem.text"></div>
             </div>
 
             <!-- Syllable Decomposition & Transliteration Reveal -->
             <div class="w-full max-w-md space-y-4">
                 <div x-show="!revealed">
-                    <button @click="revealed = true" type="button" class="w-full py-3 rounded-2xl bg-[#FAF8F5] dark:bg-[#090D16] border border-[#E8E2D8] dark:border-[#1E2738] text-xs font-semibold text-[#181C1E] dark:text-white hover:border-[#1B4D3E] dark:hover:border-emerald-500 transition-colors">
+                    <button @click="revealed = true" type="button" class="w-full py-3 rounded-2xl bg-[#FAF8F5] dark:bg-[#090D16] border border-[#E8E2D8] dark:border-[#1E2738] text-xs font-semibold text-[#181C1E] dark:text-white hover:border-[#1B4D3E] dark:hover:border-emerald-500 transition-colors cursor-pointer">
                         Sound It Out (Check Pronunciation)
                     </button>
                 </div>
@@ -78,7 +78,7 @@
                             <span class="text-xl" x-text="currentItem.breakdown"></span>
                         </div>
                     </template>
-                    <div class="text-base font-semibold text-[#181C1E] dark:text-white tracking-wide">
+                    <div class="text-sm sm:text-base font-semibold text-[#181C1E] dark:text-white tracking-wide">
                         Phonetic: <span class="font-mono text-[#1B4D3E] dark:text-emerald-400" x-text="currentItem.trans"></span>
                     </div>
                     <template x-if="currentItem.meaning">
@@ -93,11 +93,11 @@
             </div>
 
             <!-- Navigation Controls -->
-            <div class="w-full pt-6 mt-4 border-t border-[#E8E2D8]/60 dark:border-[#1E2738]/60 flex items-center justify-between">
-                <button @click="prevItem()" type="button" class="px-4 py-2 rounded-xl text-xs font-medium text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#FAF8F5] dark:hover:bg-[#090D16] transition-colors">
-                    &larr; Previous Word
+            <div class="w-full pt-6 mt-4 border-t border-[#E8E2D8]/60 dark:border-[#1E2738]/60 flex items-center justify-between gap-2">
+                <button @click="prevItem()" type="button" class="px-3 sm:px-4 py-2 rounded-xl text-xs font-medium text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#FAF8F5] dark:hover:bg-[#090D16] transition-colors cursor-pointer">
+                    &larr; Previous
                 </button>
-                <button @click="nextItem()" type="button" class="px-5 py-2 rounded-xl bg-[#1B4D3E] dark:bg-emerald-600 text-white text-xs font-semibold hover:opacity-90 transition-opacity">
+                <button @click="nextItem()" type="button" class="px-3.5 sm:px-5 py-2 rounded-xl bg-[#1B4D3E] dark:bg-emerald-600 text-white text-xs font-semibold hover:opacity-90 transition-opacity cursor-pointer">
                     Next Exercise &rarr;
                 </button>
             </div>

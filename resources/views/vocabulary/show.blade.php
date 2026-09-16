@@ -4,34 +4,36 @@
     <div class="space-y-8 max-w-4xl mx-auto">
         <!-- Breadcrumb -->
         <div class="flex items-center gap-2 text-xs text-[#687076] dark:text-[#94A3B8]">
-            <a href="{{ route('vocabulary.index') }}" class="hover:text-[#1A1D20] dark:hover:text-white transition-colors">&larr; Back to Vocabulary</a>
+            <a href="{{ route('vocabulary.index') }}" class="hover:text-[#1A1D20] dark:hover:text-white transition-colors">&larr; {{ __('Vocabulary') }}</a>
             <span>/</span>
             <span class="text-[#1A1D20] dark:text-white font-medium">{{ $word->transliteration }}</span>
         </div>
 
         <!-- Word Hero Card -->
-        <div class="rounded-3xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-8 sm:p-10 shadow-xs flex flex-col items-center text-center relative overflow-hidden">
+        <div class="rounded-3xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 sm:p-10 shadow-xs flex flex-col items-center text-center relative overflow-hidden">
             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[#1B4D3E]/10 text-[#1B4D3E] dark:bg-emerald-400/10 dark:text-emerald-400 border border-[#1B4D3E]/20 dark:border-emerald-400/20 mb-2">
                 <span>Occurs {{ number_format($word->frequency) }} times in the Quran</span>
             </span>
 
-            <div class="my-4 font-arabic text-7xl sm:text-8xl text-[#1A1D20] dark:text-white leading-relaxed">
+            <div class="my-3 sm:my-4 font-arabic text-6xl sm:text-8xl text-[#1A1D20] dark:text-white leading-relaxed">
                 {{ $word->arabic }}
             </div>
 
-            <h1 class="text-2xl font-bold text-[#1A1D20] dark:text-white tracking-tight">
+            <h1 class="text-xl sm:text-2xl font-bold text-[#1A1D20] dark:text-white tracking-tight">
                 {{ $word->meaning_en }}
             </h1>
 
             @if ($word->meaning_bn)
-                <p class="text-sm text-[#687076] dark:text-[#94A3B8] mt-1">
+                <p class="text-xs sm:text-sm text-[#687076] dark:text-[#94A3B8] mt-1">
                     {{ $word->meaning_bn }}
                 </p>
             @endif
 
-            <p class="text-xs font-mono text-[#687076] dark:text-[#94A3B8] mt-2">
-                Transliteration: <span class="font-bold text-[#1A1D20] dark:text-white">{{ $word->transliteration }}</span> • Part of speech: <span class="capitalize text-[#1A1D20] dark:text-white">{{ $word->part_of_speech }}</span>
-            </p>
+            <div class="text-xs font-mono text-[#687076] dark:text-[#94A3B8] mt-2 flex flex-wrap items-center justify-center gap-2">
+                <span>Transliteration: <span class="font-bold text-[#1A1D20] dark:text-white">{{ $word->transliteration }}</span></span>
+                <span>•</span>
+                <span>Part of speech: <span class="capitalize text-[#1A1D20] dark:text-white">{{ $word->part_of_speech }}</span></span>
+            </div>
         </div>
 
         <!-- Root Connection -->
