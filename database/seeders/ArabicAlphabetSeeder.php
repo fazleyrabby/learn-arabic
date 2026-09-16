@@ -447,7 +447,7 @@ class ArabicAlphabetSeeder extends Seeder
                     'transliteration' => $letterData['trans'],
                     'makhraj' => $letterData['makhraj'],
                     'description' => $letterData['desc'],
-                    'audio_url' => 'https://api.quran.com/audio/alphabet/'.$letterData['order'].'.mp3',
+                    'audio_url' => '/audio/letters/'.$letterData['order'].'.mp3',
                 ]
             );
 

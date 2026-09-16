@@ -16,8 +16,8 @@
     audioPlayer: null,
     playingUrl: null,
     isPlaying: false,
-    playAudio(url) {
-        if (!url) return;
+    playAudio(url, fallbackText = null) {
+        if (!url && !fallbackText) return;
         if (this.audioPlayer) {
             this.audioPlayer.pause();
             this.audioPlayer.currentTime = 0;
@@ -27,22 +27,38 @@
                 return;
             }
         }
-        this.playingUrl = url;
-        this.isPlaying = true;
-        this.audioPlayer = new Audio(url);
-        this.audioPlayer.play().catch(e => {
-            console.log('Audio playback prevented', e);
-            this.isPlaying = false;
-            this.playingUrl = null;
-        });
-        this.audioPlayer.onended = () => {
-            this.isPlaying = false;
-            this.playingUrl = null;
-        };
-        this.audioPlayer.onerror = () => {
-            this.isPlaying = false;
-            this.playingUrl = null;
-        };
+        if (url) {
+            this.playingUrl = url;
+            this.isPlaying = true;
+            this.audioPlayer = new Audio(url);
+            this.audioPlayer.play().catch(e => {
+                console.log('Audio file failed, falling back to speech synthesis', e);
+                this.isPlaying = false;
+                this.playingUrl = null;
+                if (fallbackText && 'speechSynthesis' in window) {
+                    const u = new SpeechSynthesisUtterance(fallbackText);
+                    u.lang = 'ar-SA';
+                    window.speechSynthesis.speak(u);
+                }
+            });
+            this.audioPlayer.onended = () => {
+                this.isPlaying = false;
+                this.playingUrl = null;
+            };
+            this.audioPlayer.onerror = () => {
+                this.isPlaying = false;
+                this.playingUrl = null;
+                if (fallbackText && 'speechSynthesis' in window) {
+                    const u = new SpeechSynthesisUtterance(fallbackText);
+                    u.lang = 'ar-SA';
+                    window.speechSynthesis.speak(u);
+                }
+            };
+        } else if (fallbackText && 'speechSynthesis' in window) {
+            const u = new SpeechSynthesisUtterance(fallbackText);
+            u.lang = 'ar-SA';
+            window.speechSynthesis.speak(u);
+        }
     }
 }" 
 :class="{ 'dark': darkMode }" 
