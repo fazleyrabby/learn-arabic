@@ -1,0 +1,550 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\ArabicLetter;
+use App\Models\ArabicLetterForm;
+use App\Models\Harakat;
+use Illuminate\Database\Seeder;
+
+class ArabicAlphabetSeeder extends Seeder
+{
+    /**
+     * Run the database seeds.
+     */
+    public function run(): void
+    {
+        $letters = [
+            [
+                'char' => 'ا',
+                'name_ar' => 'أَلِف',
+                'name_latin' => 'Alif',
+                'trans' => 'a / ā',
+                'order' => 1,
+                'makhraj' => 'Emptiness of the mouth and throat (Al-Jawf)',
+                'desc' => 'A non-connecting letter from the left. Serves as a long vowel or bearer for Hamzah.',
+                'forms' => [
+                    ['isolated', 'ا', 'أَمَل', 'Amal', 'Hope'],
+                    ['initial', 'ا', 'إِبِل', 'Ibil', 'Camels'],
+                    ['medial', 'ـا', 'كِتَاب', 'Kitāb', 'Book'],
+                    ['final', 'ـا', 'عَصَا', '‘Aṣā', 'Staff'],
+                ],
+            ],
+            [
+                'char' => 'ب',
+                'name_ar' => 'بَاء',
+                'name_latin' => 'Baa',
+                'trans' => 'b',
+                'order' => 2,
+                'makhraj' => 'Between the inner wet parts of both lips (Ash-Shafatan)',
+                'desc' => 'Voiced bilabial plosive. Connects from both sides. One dot below.',
+                'forms' => [
+                    ['isolated', 'ب', 'بَاب', 'Bāb', 'Door'],
+                    ['initial', 'بـ', 'بَيْت', 'Bayt', 'House'],
+                    ['medial', 'ـبـ', 'حَبْل', 'Ḥabl', 'Rope'],
+                    ['final', 'ـب', 'كَتَبَ', 'Kataba', 'He wrote'],
+                ],
+            ],
+            [
+                'char' => 'ت',
+                'name_ar' => 'تَاء',
+                'name_latin' => 'Taa',
+                'trans' => 't',
+                'order' => 3,
+                'makhraj' => 'Tip of the tongue touching the base of the upper front teeth',
+                'desc' => 'Voiceless dental plosive. Two dots above.',
+                'forms' => [
+                    ['isolated', 'ت', 'تَمْر', 'Tamr', 'Dates'],
+                    ['initial', 'تـ', 'تِين', 'Tīn', 'Fig'],
+                    ['medial', 'ـتـ', 'كِتَاب', 'Kitāb', 'Book'],
+                    ['final', 'ـت', 'بِنْت', 'Bint', 'Daughter/Girl'],
+                ],
+            ],
+            [
+                'char' => 'ث',
+                'name_ar' => 'ثَاء',
+                'name_latin' => 'Thaa',
+                'trans' => 'th',
+                'order' => 4,
+                'makhraj' => 'Tip of the tongue touching the edges of the upper two front teeth',
+                'desc' => 'Voiceless interdental fricative (like "th" in think). Three dots above.',
+                'forms' => [
+                    ['isolated', 'ث', 'ثَوْب', 'Thawb', 'Garment'],
+                    ['initial', 'ثـ', 'ثَمَر', 'Thamar', 'Fruit'],
+                    ['medial', 'ـثـ', 'مَثَل', 'Mathal', 'Example'],
+                    ['final', 'ـث', 'حَدِيث', 'Ḥadīth', 'Speech / Narration'],
+                ],
+            ],
+            [
+                'char' => 'ج',
+                'name_ar' => 'جِيم',
+                'name_latin' => 'Jeem',
+                'trans' => 'j',
+                'order' => 5,
+                'makhraj' => 'Middle of the tongue touching the hard palate',
+                'desc' => 'Voiced postalveolar affricate. One dot inside or below.',
+                'forms' => [
+                    ['isolated', 'ج', 'جَمَل', 'Jamal', 'Camel'],
+                    ['initial', 'جـ', 'جَنَّة', 'Jannah', 'Garden / Paradise'],
+                    ['medial', 'ـجـ', 'شَجَرَة', 'Shajarah', 'Tree'],
+                    ['final', 'ـج', 'حَجّ', 'Ḥajj', 'Pilgrimage'],
+                ],
+            ],
+            [
+                'char' => 'ح',
+                'name_ar' => 'حَاء',
+                'name_latin' => 'Haa',
+                'trans' => 'ḥ',
+                'order' => 6,
+                'makhraj' => 'Middle of the throat (Wasat al-Halq)',
+                'desc' => 'Voiceless pharyngeal fricative. Crisp breathy throat sound. No dots.',
+                'forms' => [
+                    ['isolated', 'ح', 'حَبّ', 'Ḥabb', 'Grain'],
+                    ['initial', 'حـ', 'حَمْد', 'Ḥamd', 'Praise'],
+                    ['medial', 'ـحـ', 'رَحْمَة', 'Raḥmah', 'Mercy'],
+                    ['final', 'ـح', 'فَتَحَ', 'Fataḥa', 'He opened'],
+                ],
+            ],
+            [
+                'char' => 'خ',
+                'name_ar' => 'خَاء',
+                'name_latin' => 'Khaa',
+                'trans' => 'kh',
+                'order' => 7,
+                'makhraj' => 'Top of the throat near the uvula (Adna al-Halq)',
+                'desc' => 'Voiceless velar/uvular fricative (like "ch" in Scottish loch). One dot above.',
+                'forms' => [
+                    ['isolated', 'خ', 'خَيْر', 'Khayr', 'Good'],
+                    ['initial', 'خـ', 'خَلَقَ', 'Khalaqa', 'He created'],
+                    ['medial', 'ـخـ', 'نَخْل', 'Nakhl', 'Date palms'],
+                    ['final', 'ـخ', 'شَيْخ', 'Shaykh', 'Elder'],
+                ],
+            ],
+            [
+                'char' => 'د',
+                'name_ar' => 'دَال',
+                'name_latin' => 'Daal',
+                'trans' => 'd',
+                'order' => 8,
+                'makhraj' => 'Tip of tongue touching the gum line of upper front teeth',
+                'desc' => 'Voiced dental plosive. Non-connecting from the left.',
+                'forms' => [
+                    ['isolated', 'د', 'دِين', 'Dīn', 'Religion/Way'],
+                    ['initial', 'د', 'دُعَاء', 'Du‘ā’', 'Supplication'],
+                    ['medial', 'ـد', 'هَدَى', 'Hadā', 'He guided'],
+                    ['final', 'ـد', 'أَحَد', 'Aḥad', 'One'],
+                ],
+            ],
+            [
+                'char' => 'ذ',
+                'name_ar' => 'ذَال',
+                'name_latin' => 'Dhaal',
+                'trans' => 'dh',
+                'order' => 9,
+                'makhraj' => 'Tip of tongue touching the edges of upper front teeth',
+                'desc' => 'Voiced interdental fricative (like "th" in this). Non-connecting letter. One dot above.',
+                'forms' => [
+                    ['isolated', 'ذ', 'ذِكْر', 'Dhikr', 'Remembrance'],
+                    ['initial', 'ذ', 'ذَهَب', 'Dhahab', 'Gold'],
+                    ['medial', 'ـذ', 'عَذَاب', '‘Adhāb', 'Punishment'],
+                    ['final', 'ـذ', 'مُعَاذ', 'Mu‘ādh', 'Refuge'],
+                ],
+            ],
+            [
+                'char' => 'ر',
+                'name_ar' => 'رَاء',
+                'name_latin' => 'Raa',
+                'trans' => 'r',
+                'order' => 10,
+                'makhraj' => 'Tip of tongue and part of its back against the alveolar ridge',
+                'desc' => 'Alveolar trill or tap. Heavy with fathah/dammah, light with kasrah. Non-connecting.',
+                'forms' => [
+                    ['isolated', 'ر', 'رَبّ', 'Rabb', 'Lord'],
+                    ['initial', 'ر', 'رَحِيم', 'Raḥīm', 'Merciful'],
+                    ['medial', 'ـر', 'قُرْآن', 'Qur’ān', 'Quran'],
+                    ['final', 'ـر', 'نُور', 'Nūr', 'Light'],
+                ],
+            ],
+            [
+                'char' => 'ز',
+                'name_ar' => 'زَاي',
+                'name_latin' => 'Zaay',
+                'trans' => 'z',
+                'order' => 11,
+                'makhraj' => 'Tip of tongue close to upper and lower incisors',
+                'desc' => 'Voiced alveolar fricative. Non-connecting letter. One dot above.',
+                'forms' => [
+                    ['isolated', 'ز', 'زَيْت', 'Zayt', 'Oil'],
+                    ['initial', 'ز', 'زَكَاة', 'Zakāh', 'Purifying alms'],
+                    ['medial', 'ـز', 'رِزْق', 'Rizq', 'Provision'],
+                    ['final', 'ـز', 'عَزِيز', '‘Azīz', 'Mighty'],
+                ],
+            ],
+            [
+                'char' => 'س',
+                'name_ar' => 'سِين',
+                'name_latin' => 'Seen',
+                'trans' => 's',
+                'order' => 12,
+                'makhraj' => 'Tip of tongue at the edge of the lower front teeth',
+                'desc' => 'Voiceless alveolar fricative with natural whistling sound (Safeer). Three teeth, no dots.',
+                'forms' => [
+                    ['isolated', 'س', 'سُورَة', 'Sūrah', 'Chapter'],
+                    ['initial', 'سـ', 'سَلَام', 'Salām', 'Peace'],
+                    ['medial', 'ـسـ', 'مَسْجِد', 'Masjid', 'Mosque'],
+                    ['final', 'ـس', 'شَمْس', 'Shams', 'Sun'],
+                ],
+            ],
+            [
+                'char' => 'ش',
+                'name_ar' => 'شِين',
+                'name_latin' => 'Sheen',
+                'trans' => 'sh',
+                'order' => 13,
+                'makhraj' => 'Middle of the tongue and roof of the mouth',
+                'desc' => 'Voiceless postalveolar fricative with spreading of air (Tafash-shi). Three dots above.',
+                'forms' => [
+                    ['isolated', 'ش', 'شَيْء', 'Shay’', 'Thing'],
+                    ['initial', 'شـ', 'شُكْر', 'Shukr', 'Gratitude'],
+                    ['medial', 'ـشـ', 'بَشِير', 'Bashīr', 'Bringer of good tidings'],
+                    ['final', 'ـش', 'عَرْش', '‘Arsh', 'Throne'],
+                ],
+            ],
+            [
+                'char' => 'ص',
+                'name_ar' => 'صَاد',
+                'name_latin' => 'Saad',
+                'trans' => 'ṣ',
+                'order' => 14,
+                'makhraj' => 'Tip of tongue near lower incisors with back of tongue raised (Itbaq)',
+                'desc' => 'Emphatic heavy "s". Deep resonance. No dots.',
+                'forms' => [
+                    ['isolated', 'ص', 'صَوْم', 'Ṣawm', 'Fasting'],
+                    ['initial', 'صـ', 'صِرَاط', 'Ṣirāṭ', 'Path'],
+                    ['medial', 'ـصـ', 'بَصِير', 'Baṣīr', 'All-Seeing'],
+                    ['final', 'ـص', 'إِخْلَاص', 'Ikhlāṣ', 'Sincerity'],
+                ],
+            ],
+            [
+                'char' => 'ض',
+                'name_ar' => 'ضَاد',
+                'name_latin' => 'Daad',
+                'trans' => 'ḍ',
+                'order' => 15,
+                'makhraj' => 'One or both sides of the tongue against upper molars',
+                'desc' => 'Emphatic heavy "d" with sound elongation (Istitalah). Distinctive to Arabic. One dot above.',
+                'forms' => [
+                    ['isolated', 'ض', 'ضَوْء', 'Ḍaw’', 'Light'],
+                    ['initial', 'ضـ', 'ضَلَال', 'Ḍalāl', 'Error'],
+                    ['medial', 'ـضـ', 'رِضْوَان', 'Riḍwān', 'Good pleasure'],
+                    ['final', 'ـض', 'أَرْض', 'Arḍ', 'Earth'],
+                ],
+            ],
+            [
+                'char' => 'ط',
+                'name_ar' => 'طَاء',
+                'name_latin' => 'Taa (Emphatic)',
+                'trans' => 'ṭ',
+                'order' => 16,
+                'makhraj' => 'Tip of tongue against gums of upper front teeth with tongue raised',
+                'desc' => 'Emphatic heavy "t". Strongest letter in Arabic. Tall vertical stroke, no dots.',
+                'forms' => [
+                    ['isolated', 'ط', 'طَيْر', 'Ṭayr', 'Bird'],
+                    ['initial', 'طـ', 'طَيِّب', 'Ṭayyib', 'Good/Pure'],
+                    ['medial', 'ـطـ', 'مَطَر', 'Maṭar', 'Rain'],
+                    ['final', 'ـط', 'صِرَاط', 'Ṣirāṭ', 'Path'],
+                ],
+            ],
+            [
+                'char' => 'ظ',
+                'name_ar' => 'ظَاء',
+                'name_latin' => 'Zhaa (Emphatic)',
+                'trans' => 'ẓ',
+                'order' => 17,
+                'makhraj' => 'Tip of tongue against edges of upper front teeth with tongue raised',
+                'desc' => 'Emphatic voiced interdental sound ("th" in that, made deep and heavy). One dot above.',
+                'forms' => [
+                    ['isolated', 'ظ', 'ظِلّ', 'Ẓill', 'Shade'],
+                    ['initial', 'ظـ', 'ظُلُمَات', 'Ẓulumāt', 'Darknesses'],
+                    ['medial', 'ـظـ', 'عَظِيم', '‘Aẓīm', 'Magnificent'],
+                    ['final', 'ـظ', 'حَفِيظ', 'Ḥafīẓ', 'Preserver'],
+                ],
+            ],
+            [
+                'char' => 'ع',
+                'name_ar' => 'عَيْن',
+                'name_latin' => '‘Ayn',
+                'trans' => '‘',
+                'order' => 18,
+                'makhraj' => 'Middle of the throat (Wasat al-Halq)',
+                'desc' => 'Voiced pharyngeal fricative. Deep contraction of throat muscles. No dots.',
+                'forms' => [
+                    ['isolated', 'ع', 'عِلْم', '‘Ilm', 'Knowledge'],
+                    ['initial', 'عـ', 'عَبْد', '‘Abd', 'Servant'],
+                    ['medial', 'ـعـ', 'مَعْرُوف', 'Ma‘rūf', 'Known/Good'],
+                    ['final', 'ـع', 'سَمِيع', 'Samī‘', 'All-Hearing'],
+                ],
+            ],
+            [
+                'char' => 'غ',
+                'name_ar' => 'غَيْن',
+                'name_latin' => 'Ghayn',
+                'trans' => 'gh',
+                'order' => 19,
+                'makhraj' => 'Top of the throat near uvula (Adna al-Halq)',
+                'desc' => 'Voiced velar/uvular fricative (gargling sound, French "r"). One dot above.',
+                'forms' => [
+                    ['isolated', 'غ', 'غَيْب', 'Ghayb', 'The Unseen'],
+                    ['initial', 'غـ', 'غَفُور', 'Ghafūr', 'Oft-Forgiving'],
+                    ['medial', 'ـغـ', 'بَغْتَة', 'Baghtah', 'Suddenly'],
+                    ['final', 'ـغ', 'بَلَاغ', 'Balāgh', 'Clear notification'],
+                ],
+            ],
+            [
+                'char' => 'ف',
+                'name_ar' => 'فَاء',
+                'name_latin' => 'Faa',
+                'trans' => 'f',
+                'order' => 20,
+                'makhraj' => 'Edge of upper front teeth against wet inner lower lip',
+                'desc' => 'Voiceless labiodental fricative. One dot above flat loop.',
+                'forms' => [
+                    ['isolated', 'ف', 'فَوْز', 'Fawz', 'Success'],
+                    ['initial', 'فـ', 'فَتْح', 'Fatḥ', 'Victory / Opening'],
+                    ['medial', 'ـفـ', 'مَغْفِرَة', 'Maghfirah', 'Forgiveness'],
+                    ['final', 'ـف', 'خَوْف', 'Khawf', 'Fear'],
+                ],
+            ],
+            [
+                'char' => 'ق',
+                'name_ar' => 'قَاف',
+                'name_latin' => 'Qaaf',
+                'trans' => 'q',
+                'order' => 21,
+                'makhraj' => 'Deep back of the tongue against the soft palate (Uvula)',
+                'desc' => 'Voiceless uvular plosive. Emphatic deep "k". Two dots above circular head.',
+                'forms' => [
+                    ['isolated', 'ق', 'قَلْب', 'Qalb', 'Heart'],
+                    ['initial', 'قـ', 'قُرْآن', 'Qur’ān', 'Quran'],
+                    ['medial', 'ـقـ', 'تَقْوَى', 'Taqwā', 'God-consciousness'],
+                    ['final', 'ـق', 'حَقّ', 'Ḥaqq', 'Truth'],
+                ],
+            ],
+            [
+                'char' => 'ك',
+                'name_ar' => 'كَاف',
+                'name_latin' => 'Kaaf',
+                'trans' => 'k',
+                'order' => 22,
+                'makhraj' => 'Back of tongue slightly forward of Qaaf against hard/soft palate',
+                'desc' => 'Voiceless velar plosive (standard "k"). Changes shape in initial/medial vs final.',
+                'forms' => [
+                    ['isolated', 'ك', 'كِتَاب', 'Kitāb', 'Book'],
+                    ['initial', 'كـ', 'كَلِمَة', 'Kalimah', 'Word'],
+                    ['medial', 'ـكـ', 'حِكْمَة', 'Ḥikmah', 'Wisdom'],
+                    ['final', 'ـك', 'مَلَك', 'Malak', 'Angel'],
+                ],
+            ],
+            [
+                'char' => 'ل',
+                'name_ar' => 'لَام',
+                'name_latin' => 'Laam',
+                'trans' => 'l',
+                'order' => 23,
+                'makhraj' => 'Sides of tip of tongue touching upper gums',
+                'desc' => 'Alveolar lateral approximant. Tall ascender, connects from both sides.',
+                'forms' => [
+                    ['isolated', 'ل', 'لَيْل', 'Layl', 'Night'],
+                    ['initial', 'لـ', 'لَوْح', 'Lawḥ', 'Tablet'],
+                    ['medial', 'ـلـ', 'قَلْب', 'Qalb', 'Heart'],
+                    ['final', 'ـل', 'عَدْل', '‘Adl', 'Justice'],
+                ],
+            ],
+            [
+                'char' => 'م',
+                'name_ar' => 'مِيم',
+                'name_latin' => 'Meem',
+                'trans' => 'm',
+                'order' => 24,
+                'makhraj' => 'Between the outer dry parts of both lips',
+                'desc' => 'Bilabial nasal sound with natural Ghunnah (nasal resonance).',
+                'forms' => [
+                    ['isolated', 'م', 'مَاء', 'Mā’', 'Water'],
+                    ['initial', 'مـ', 'مُؤْمِن', 'Mu’min', 'Believer'],
+                    ['medial', 'ـمـ', 'شَمْس', 'Shams', 'Sun'],
+                    ['final', 'ـم', 'يَوْم', 'Yawm', 'Day'],
+                ],
+            ],
+            [
+                'char' => 'ن',
+                'name_ar' => 'نُون',
+                'name_latin' => 'Noon',
+                'trans' => 'n',
+                'order' => 25,
+                'makhraj' => 'Tip of tongue touching upper front gum with nasal cavity',
+                'desc' => 'Alveolar nasal with Ghunnah. One dot above deep bowl.',
+                'forms' => [
+                    ['isolated', 'ن', 'نَار', 'Nār', 'Fire'],
+                    ['initial', 'نـ', 'نُور', 'Nūr', 'Light'],
+                    ['medial', 'ـنـ', 'جَنَّة', 'Jannah', 'Paradise'],
+                    ['final', 'ـن', 'مِيزَان', 'Mīzān', 'Balance'],
+                ],
+            ],
+            [
+                'char' => 'ه',
+                'name_ar' => 'هَاء',
+                'name_latin' => 'Haa (Deep)',
+                'trans' => 'h',
+                'order' => 26,
+                'makhraj' => 'Deepest part of the throat (Aqsa al-Halq)',
+                'desc' => 'Voiceless glottal fricative (soft English "h" from the chest). Changes shape completely.',
+                'forms' => [
+                    ['isolated', 'ه', 'هُدًى', 'Hudan', 'Guidance'],
+                    ['initial', 'هـ', 'هِلَال', 'Hilāl', 'Crescent'],
+                    ['medial', 'ـهـ', 'نَهْر', 'Nahr', 'River'],
+                    ['final', 'ـه', 'وَجْه', 'Wajh', 'Face'],
+                ],
+            ],
+            [
+                'char' => 'و',
+                'name_ar' => 'وَاو',
+                'name_latin' => 'Waaw',
+                'trans' => 'w / ū',
+                'order' => 27,
+                'makhraj' => 'Rounding of lips without complete closure',
+                'desc' => 'Voiced labio-velar approximant. Also acts as long vowel "ū". Non-connecting from left.',
+                'forms' => [
+                    ['isolated', 'و', 'وَقْت', 'Waqt', 'Time'],
+                    ['initial', 'و', 'وَلَد', 'Walad', 'Child'],
+                    ['medial', 'ـو', 'نُور', 'Nūr', 'Light'],
+                    ['final', 'ـو', 'عَفْو', '‘Afw', 'Pardon'],
+                ],
+            ],
+            [
+                'char' => 'ي',
+                'name_ar' => 'يَاء',
+                'name_latin' => 'Yaa',
+                'trans' => 'y / ī',
+                'order' => 28,
+                'makhraj' => 'Middle of the tongue against the palate',
+                'desc' => 'Palatal approximant. Also acts as long vowel "ī". Two dots below in initial/medial.',
+                'forms' => [
+                    ['isolated', 'ي', 'يَوْم', 'Yawm', 'Day'],
+                    ['initial', 'يـ', 'يَقِين', 'Yaqīn', 'Certainty'],
+                    ['medial', 'ـيـ', 'إِيمَان', 'Īmān', 'Faith'],
+                    ['final', 'ـي', 'نَبِيّ', 'Nabī', 'Prophet'],
+                ],
+            ],
+        ];
+
+        foreach ($letters as $letterData) {
+            $letter = ArabicLetter::updateOrCreate(
+                ['order' => $letterData['order']],
+                [
+                    'character' => $letterData['char'],
+                    'name_ar' => $letterData['name_ar'],
+                    'name_latin' => $letterData['name_latin'],
+                    'transliteration' => $letterData['trans'],
+                    'makhraj' => $letterData['makhraj'],
+                    'description' => $letterData['desc'],
+                    'audio_url' => 'https://api.quran.com/audio/alphabet/'.$letterData['order'].'.mp3',
+                ]
+            );
+
+            foreach ($letterData['forms'] as $formData) {
+                ArabicLetterForm::updateOrCreate(
+                    [
+                        'arabic_letter_id' => $letter->id,
+                        'position' => $formData[0],
+                    ],
+                    [
+                        'form' => $formData[1],
+                        'example' => $formData[2],
+                        'example_transliteration' => $formData[3],
+                        'example_meaning' => $formData[4],
+                    ]
+                );
+            }
+        }
+
+        $harakats = [
+            [
+                'name' => 'Fatḥah',
+                'name_ar' => 'فَتْحَة',
+                'symbol' => 'َ',
+                'sound' => 'Short "a" vowel sound (as in "cat" or "cup")',
+                'description' => 'A small diagonal stroke placed above a letter, representing a short vowel "a".',
+                'order' => 1,
+            ],
+            [
+                'name' => 'Kasrah',
+                'name_ar' => 'كَسْرَة',
+                'symbol' => 'ِ',
+                'sound' => 'Short "i" vowel sound (as in "bit")',
+                'description' => 'A small diagonal stroke placed beneath a letter, representing a short vowel "i".',
+                'order' => 2,
+            ],
+            [
+                'name' => 'Ḍammah',
+                'name_ar' => 'ضَمَّة',
+                'symbol' => 'ُ',
+                'sound' => 'Short "u" vowel sound (as in "put")',
+                'description' => 'A small curl resembling a miniature Waw placed above a letter, representing short vowel "u".',
+                'order' => 3,
+            ],
+            [
+                'name' => 'Sukūn',
+                'name_ar' => 'سُكُون',
+                'symbol' => 'ْ',
+                'sound' => 'Absence of vowel / stop on the consonant',
+                'description' => 'A small circle above a letter indicating zero vowel sound (quiescence).',
+                'order' => 4,
+            ],
+            [
+                'name' => 'Shaddah',
+                'name_ar' => 'شَدَّة',
+                'symbol' => 'ّ',
+                'sound' => 'Doubling / emphasis on the consonant',
+                'description' => 'A miniature Seen symbol above a letter, indicating that the consonant is doubled (geminate).',
+                'order' => 5,
+            ],
+            [
+                'name' => 'Tanwīn Fatḥ',
+                'name_ar' => 'تَنْوِين فَتْح',
+                'symbol' => 'ً',
+                'sound' => '"-an" nunation suffix',
+                'description' => 'Double Fathah producing the sound "-an", used for indefinite accusative nouns.',
+                'order' => 6,
+            ],
+            [
+                'name' => 'Tanwīn Kasr',
+                'name_ar' => 'تَنْوِين كَسْر',
+                'symbol' => 'ٍ',
+                'sound' => '"-in" nunation suffix',
+                'description' => 'Double Kasrah producing the sound "-in", used for indefinite genitive nouns.',
+                'order' => 7,
+            ],
+            [
+                'name' => 'Tanwīn Ḍamm',
+                'name_ar' => 'تَنْوِين ضَمّ',
+                'symbol' => 'ٌ',
+                'sound' => '"-un" nunation suffix',
+                'description' => 'Double Dammah producing the sound "-un", used for indefinite nominative nouns.',
+                'order' => 8,
+            ],
+        ];
+
+        foreach ($harakats as $harakatData) {
+            Harakat::updateOrCreate(
+                ['order' => $harakatData['order']],
+                [
+                    'name' => $harakatData['name'],
+                    'name_ar' => $harakatData['name_ar'],
+                    'symbol' => $harakatData['symbol'],
+                    'sound' => $harakatData['sound'],
+                    'description' => $harakatData['description'],
+                ]
+            );
+        }
+    }
+}

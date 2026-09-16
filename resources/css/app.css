@@ -1,0 +1,118 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@theme {
+    --font-sans: 'Figtree', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-display: 'Cinzel', 'Amiri', Georgia, serif;
+
+    --color-parchment: #FAF8F5;
+    --color-parchment-card: #FFFFFF;
+    --color-parchment-border: #E8E2D8;
+    --color-ink: #181C1E;
+    --color-ink-muted: #5C656C;
+    --color-emerald-quran: #1B4D3E;
+    --color-emerald-glow: #246B56;
+    --color-gold-quran: #9A722C;
+    --color-gold-warm: #C59A47;
+
+    --color-obsidian: #090D16;
+    --color-obsidian-card: #111723;
+    --color-obsidian-border: #1E2738;
+}
+
+/* Dynamic Arabic Typography */
+:root {
+    --font-arabic-active: 'Amiri', serif;
+}
+
+[data-arabic-font="amiri"] {
+    --font-arabic-active: 'Amiri', serif;
+}
+
+[data-arabic-font="scheherazade"] {
+    --font-arabic-active: 'Scheherazade New', serif;
+}
+
+[data-arabic-font="noto"] {
+    --font-arabic-active: 'Noto Naskh Arabic', serif;
+}
+
+[data-arabic-font="lateef"] {
+    --font-arabic-active: 'Lateef', serif;
+}
+
+.font-arabic, .arabic-word {
+    font-family: var(--font-arabic-active), 'Amiri', 'Scheherazade New', serif;
+    line-height: 2.2;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+.font-display {
+    font-family: var(--font-display);
+}
+
+.arabic-word {
+    direction: rtl;
+    unicode-bidi: isolate;
+}
+
+.tabular-nums {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Browser Surfaces Theming */
+::selection {
+    background-color: rgba(27, 77, 62, 0.22);
+    color: #12382D;
+}
+
+.dark ::selection {
+    background-color: rgba(52, 211, 153, 0.3);
+    color: #A7F3D0;
+}
+
+:focus-visible {
+    outline: 2px solid #1B4D3E;
+    outline-offset: 2px;
+}
+
+.dark :focus-visible {
+    outline: 2px solid #34D399;
+    outline-offset: 2px;
+}
+
+/* Minimal Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #DDD7CB;
+    border-radius: 9999px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background: #253147;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #C2BBAE;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #33435F;
+}
+
+/* Micro-interaction for playing audio */
+@keyframes audio-wave {
+    0%, 100% { height: 4px; }
+    50% { height: 16px; }
+}
+
+.audio-bar-1 { animation: audio-wave 0.8s ease-in-out infinite; }
+.audio-bar-2 { animation: audio-wave 0.8s ease-in-out 0.2s infinite; }
+.audio-bar-3 { animation: audio-wave 0.8s ease-in-out 0.4s infinite; }
