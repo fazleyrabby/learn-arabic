@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ 
-    darkMode: localStorage.getItem('theme') === 'dark',
+    darkMode: localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches),
     arabicFont: localStorage.getItem('arabicFont') || 'amiri',
     fontMenuOpen: false,
     mobileDrawerOpen: false,
     toggleTheme() {
         this.darkMode = !this.darkMode;
         localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+        if (this.darkMode) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
     },
     setArabicFont(fontKey) {
         this.arabicFont = fontKey;
@@ -25,6 +30,15 @@ class="h-full scroll-smooth"
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? __('Quranic Arabic') . ' — ' . __('Direct Path to Understanding the Holy Quran') }}</title>
+
+    <!-- Theme Flash Prevention -->
+    <script>
+        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
     
     <!-- Dignified Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
