@@ -13,36 +13,8 @@
         localStorage.setItem('arabicFont', fontKey);
         this.fontMenuOpen = false;
     },
-    audioPlayer: null,
-    playingUrl: null,
-    isPlaying: false,
-    playAudio(url) {
-        if (!url) return;
-        if (this.audioPlayer) {
-            this.audioPlayer.pause();
-            this.audioPlayer.currentTime = 0;
-            if (this.playingUrl === url && this.isPlaying) {
-                this.isPlaying = false;
-                this.playingUrl = null;
-                return;
-            }
-        }
-        this.playingUrl = url;
-        this.isPlaying = true;
-        this.audioPlayer = new Audio(url);
-        this.audioPlayer.play().catch(e => {
-            console.log('Audio playback prevented', e);
-            this.isPlaying = false;
-            this.playingUrl = null;
-        });
-        this.audioPlayer.onended = () => {
-            this.isPlaying = false;
-            this.playingUrl = null;
-        };
-        this.audioPlayer.onerror = () => {
-            this.isPlaying = false;
-            this.playingUrl = null;
-        };
+    playAudio(url, fallbackText = null) {
+        window.playAudio(url, fallbackText);
     }
 }" 
 :class="{ 'dark': darkMode }" 
@@ -61,6 +33,62 @@ class="h-full scroll-smooth"
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- High-reliability Audio System -->
+    <script>
+        window.playAudio = function(url, fallbackText = null) {
+            if (!url && !fallbackText) return;
+
+            // Stop any currently playing audio
+            if (window._currentAudio) {
+                try {
+                    window._currentAudio.pause();
+                    window._currentAudio.currentTime = 0;
+                } catch(e) {}
+            }
+
+            if (url) {
+                try {
+                    const audio = new Audio(url);
+                    window._currentAudio = audio;
+                    const playPromise = audio.play();
+                    if (playPromise !== undefined) {
+                        playPromise.catch(err => {
+                            console.warn('MP3 playback failed, using Arabic speech synthesis:', err);
+                            if (fallbackText) {
+                                window.speakArabic(fallbackText);
+                            }
+                        });
+                    }
+                    audio.onerror = function() {
+                        console.warn('MP3 file error, using Arabic speech synthesis');
+                        if (fallbackText) {
+                            window.speakArabic(fallbackText);
+                        }
+                    };
+                } catch (e) {
+                    if (fallbackText) {
+                        window.speakArabic(fallbackText);
+                    }
+                }
+            } else if (fallbackText) {
+                window.speakArabic(fallbackText);
+            }
+        };
+
+        window.speakArabic = function(text) {
+            if (!text || !('speechSynthesis' in window)) return;
+            try {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'ar-SA';
+                utterance.rate = 0.82;
+                window.speechSynthesis.speak(utterance);
+            } catch(e) {
+                console.warn('SpeechSynthesis error:', e);
+            }
+        };
+    </script>
 </head>
 <body class="min-h-full font-sans antialiased transition-colors duration-200 bg-[#FAF8F5] text-[#181C1E] dark:bg-[#090D16] dark:text-[#F0F4F8] flex flex-col">
     
@@ -212,7 +240,7 @@ class="h-full scroll-smooth"
     </div>
 
     <!-- Mobile Slide-over Drawer Panel -->
-    <div x-show="mobileDrawerOpen"
+    <div x-show="mobileDrawerOpen" 
          x-transition:enter="transition ease-out duration-250 transform"
          x-transition:enter-start="translate-x-full"
          x-transition:enter-end="translate-x-0"
