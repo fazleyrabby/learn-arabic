@@ -67,34 +67,46 @@
         <div x-show="activeTab === 'harakat'" class="space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 @foreach ($harakats as $h)
-                    <div class="rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 space-y-4">
+                    <div class="rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 space-y-4 hover:border-[#1B4D3E]/40 dark:hover:border-emerald-500/40 transition-colors shadow-xs">
                         <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <div class="w-14 h-14 rounded-xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-center font-arabic text-4xl text-[#9A722C] dark:text-amber-400">
-                                    {{ $h->symbol }}
+                            <div class="flex items-center gap-3.5">
+                                <!-- Canonical Diacritic Carrier Tile -->
+                                <div class="w-16 h-16 rounded-2xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-center font-arabic text-4xl text-[#9A722C] dark:text-amber-400 select-none shadow-xs">
+                                    <span class="leading-none">&#x25CC;{{ $h->symbol }}</span>
                                 </div>
                                 <div>
-                                    <h3 class="text-base font-semibold text-[#1A1D20] dark:text-white">{{ $h->name }}</h3>
-                                    <div class="text-xs font-arabic text-[#687076] dark:text-[#94A3B8]">{{ $h->name_ar }}</div>
+                                    <h3 class="text-base font-semibold text-[#1A1D20] dark:text-white">
+                                        {{ app()->getLocale() === 'bn' && $h->name_bn ? $h->name_bn : $h->name }}
+                                    </h3>
+                                    <div class="text-sm font-arabic text-[#1B4D3E] dark:text-emerald-400">{{ $h->name_ar }}</div>
                                 </div>
                             </div>
-                            <span class="text-xs px-2.5 py-1 rounded-full bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] text-[#687076] dark:text-[#94A3B8]">
-                                Order #{{ $h->order }}
+                            <span class="text-xs px-2.5 py-1 rounded-full bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] text-[#687076] dark:text-[#94A3B8] font-mono">
+                                #{{ $h->order }}
                             </span>
                         </div>
 
                         <p class="text-sm text-[#687076] dark:text-[#94A3B8] leading-relaxed">
-                            {{ $h->description }}
+                            {{ app()->getLocale() === 'bn' && $h->description_bn ? $h->description_bn : $h->description }}
                         </p>
 
                         <!-- Pronunciation Sample on Letter Baa -->
-                        <div class="p-3 rounded-xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-between">
-                            <div class="flex items-center gap-3">
-                                <span class="text-xs text-[#687076] dark:text-[#94A3B8]">Sound Effect:</span>
-                                <span class="text-xs font-medium text-[#1A1D20] dark:text-white">{{ $h->sound }}</span>
+                        <div class="p-3.5 rounded-xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-between">
+                            <div class="flex flex-col gap-0.5">
+                                <span class="text-[11px] text-[#687076] dark:text-[#94A3B8] font-medium uppercase tracking-wider">
+                                    {{ app()->getLocale() === 'bn' ? 'ধ্বনি প্রভাব' : 'Sound Effect' }}
+                                </span>
+                                <span class="text-xs font-semibold text-[#1A1D20] dark:text-white">
+                                    {{ app()->getLocale() === 'bn' && $h->sound_bn ? $h->sound_bn : $h->sound }}
+                                </span>
                             </div>
-                            <div class="font-arabic text-2xl text-[#1B4D3E] dark:text-emerald-400">
-                                ب{{ $h->symbol }}
+                            <div class="flex items-center gap-2 pl-3 border-l border-[#EBE6DE] dark:border-[#212B3E]">
+                                <span class="text-[10px] text-[#687076] dark:text-[#94A3B8] hidden sm:inline">
+                                    {{ app()->getLocale() === 'bn' ? 'বা দিয়ে উদাহরণ:' : 'Example on Bā:' }}
+                                </span>
+                                <span class="font-arabic text-3xl text-[#1B4D3E] dark:text-emerald-400 font-bold">
+                                    ب{{ $h->symbol }}
+                                </span>
                             </div>
                         </div>
                     </div>
