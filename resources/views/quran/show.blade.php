@@ -355,11 +355,11 @@
                     </div>
 
                     <!-- Interactive Word-by-Word Chips (RTL Flow) -->
-                    <div class="flex flex-wrap flex-row-reverse gap-2 sm:gap-3 items-center justify-start py-2">
+                    <div class="flex flex-wrap flex-row-reverse gap-1.5 sm:gap-3 items-center justify-start py-2">
                         <template x-for="word in verse.words" :key="word.pos">
                             <button @click="selectWord(word, verse.number)"
                                     type="button"
-                                    class="group/word relative rounded-2xl p-2.5 sm:p-3.5 bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#E8E2D8] dark:border-[#212B3E] hover:border-[#1B4D3E] dark:hover:border-emerald-400 hover:shadow-sm active:scale-90 transition-all duration-150 flex flex-col items-center min-w-[65px] sm:min-w-[85px] text-center cursor-pointer select-none">
+                                    class="group/word relative rounded-2xl p-2 sm:p-3.5 bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#E8E2D8] dark:border-[#212B3E] hover:border-[#1B4D3E] dark:hover:border-emerald-400 hover:shadow-sm active:scale-90 transition-all duration-150 flex flex-col items-center min-w-[58px] sm:min-w-[85px] text-center cursor-pointer select-none">
                                 
                                 <!-- Word Arabic Text (Scalable size) -->
                                 <span class="font-arabic leading-relaxed text-[#181C1E] dark:text-white group-hover/word:text-[#1B4D3E] dark:group-hover/word:text-emerald-400 transition-colors"
@@ -423,7 +423,7 @@
              @click.self="showWordDrawer = false"
              style="display: none;">
 
-            <div class="w-full max-w-lg bg-white dark:bg-[#131926] rounded-t-3xl sm:rounded-3xl border border-[#E8E2D8] dark:border-[#212B3E] p-6 sm:p-8 space-y-6 shadow-2xl relative max-h-[85vh] overflow-y-auto"
+            <div class="w-full max-w-lg bg-white dark:bg-[#131926] rounded-t-3xl sm:rounded-3xl border border-[#E8E2D8] dark:border-[#212B3E] p-5 sm:p-8 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:pb-8 space-y-5 sm:space-y-6 shadow-2xl relative max-h-[85vh] overflow-y-auto"
                  x-transition:enter="transition ease-out duration-200 transform"
                  x-transition:enter-start="translate-y-full sm:scale-95"
                  x-transition:enter-end="translate-y-0 sm:scale-100"
