@@ -3,6 +3,7 @@ name: Deploy
 on:
   push:
     branches: [deploy]
+  workflow_dispatch:
 
 concurrency:
   group: deploy-${{ github.ref }}
