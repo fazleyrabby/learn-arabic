@@ -29,11 +29,8 @@
             playingId: null,
             playWord(id, audioUrl, arabic, translit) {
                 this.playingId = id;
-                if (audioUrl) {
-                    window.playAudio(audioUrl, arabic);
-                } else {
-                    window.speakArabic(arabic, translit);
-                }
+                const finalUrl = audioUrl || `/audio/vocabulary/${id}.mp3`;
+                window.playAudio(finalUrl, arabic);
                 setTimeout(() => {
                     if (this.playingId === id) this.playingId = null;
                 }, 1600);

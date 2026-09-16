@@ -207,6 +207,10 @@ class TopQuranicVocabularySeeder extends Seeder
                 ]
             );
 
+            if (! $vocab->audio_url) {
+                $vocab->update(['audio_url' => "/audio/vocabulary/{$vocab->id}.mp3"]);
+            }
+
             if ($fatihahSurah && $fatihahVerse1 && in_array($w[0], ['الله', 'رَبّ', 'صِرَاط', 'دِين', 'عَبْد', 'الرَّحْمَٰنِ', 'الرَّحِيمِ'])) {
                 VocabularyOccurrence::firstOrCreate([
                     'vocabulary_id' => $vocab->id,

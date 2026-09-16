@@ -15,14 +15,9 @@
             speed: 0.85,
             playAudio() {
                 this.isPlaying = true;
-                const audioUrl = '{{ $word->audio_url ?? '' }}';
+                const audioUrl = '{{ $word->audio_url ?: "/audio/vocabulary/{$word->id}.mp3" }}';
                 const arabic = '{{ $word->arabic }}';
-                const translit = '{{ $word->transliteration }}';
-                if (audioUrl) {
-                    window.playAudio(audioUrl, arabic);
-                } else {
-                    window.speakArabic(arabic, translit);
-                }
+                window.playAudio(audioUrl, arabic);
                 setTimeout(() => {
                     this.isPlaying = false;
                 }, 1800);
