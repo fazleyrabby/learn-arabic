@@ -90,16 +90,62 @@ class="h-full scroll-smooth"
             }
         };
 
-        window.speakArabic = function(text) {
-            if (!text || !('speechSynthesis' in window)) return;
+        window.playChime = function(freq = 520, type = 'sine', duration = 0.15) {
             try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (!AudioCtx) return;
+                const ctx = window._audioCtx || (window._audioCtx = new AudioCtx());
+                if (ctx.state === 'suspended') {
+                    ctx.resume();
+                }
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                gain.gain.setValueAtTime(0.18, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + duration);
+            } catch(e) {}
+        };
+
+        window.speakArabic = function(text, fallback) {
+            if (!text) return;
+            if (!('speechSynthesis' in window)) {
+                window.playChime(480, 'triangle', 0.2);
+                return;
+            }
+            try {
+                if (window.speechSynthesis.paused) {
+                    window.speechSynthesis.resume();
+                }
                 window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'ar-SA';
                 utterance.rate = 0.82;
+
+                const voices = window.speechSynthesis.getVoices();
+                const arVoice = voices.find(v => v.lang && (v.lang.startsWith('ar') || v.lang.includes('ar')));
+                if (arVoice) {
+                    utterance.voice = arVoice;
+                }
+
+                utterance.onerror = function() {
+                    if (fallback) {
+                        const fb = new SpeechSynthesisUtterance(fallback);
+                        fb.rate = 0.85;
+                        window.speechSynthesis.speak(fb);
+                    } else {
+                        window.playChime(440, 'triangle', 0.2);
+                    }
+                };
+
                 window.speechSynthesis.speak(utterance);
             } catch(e) {
                 console.warn('SpeechSynthesis error:', e);
+                window.playChime(440, 'triangle', 0.2);
             }
         };
     </script>
@@ -149,21 +195,21 @@ class="h-full scroll-smooth"
             <!-- Actions: Language Switcher, Arabic Font, Theme, Mobile Hamburger -->
             <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <!-- Language Switcher (English / Bengali) -->
-                <div class="flex items-center rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 p-0.5 text-xs font-medium">
-                    <a href="{{ route('locale.switch', 'en') }}" class="px-2 py-1 rounded-lg transition-colors {{ app()->getLocale() === 'en' ? 'bg-[#1B4D3E] text-white font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white' }}" title="Switch to English">
+                <div class="h-9 inline-flex items-center rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 p-0.5 text-xs font-medium shadow-2xs">
+                    <a href="{{ route('locale.switch', 'en') }}" class="h-full px-2 sm:px-2.5 rounded-lg inline-flex items-center justify-center transition-colors {{ app()->getLocale() === 'en' ? 'bg-[#1B4D3E] text-white font-semibold shadow-2xs' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white' }}" title="Switch to English">
                         EN
                     </a>
-                    <a href="{{ route('locale.switch', 'bn') }}" class="px-2 py-1 rounded-lg transition-colors {{ app()->getLocale() === 'bn' ? 'bg-[#1B4D3E] text-white font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white' }}" title="বাংলা ভাষায় পরিবর্তন করুন">
+                    <a href="{{ route('locale.switch', 'bn') }}" class="h-full px-2 sm:px-2.5 rounded-lg inline-flex items-center justify-center transition-colors {{ app()->getLocale() === 'bn' ? 'bg-[#1B4D3E] text-white font-semibold shadow-2xs' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white' }}" title="বাংলা ভাষায় পরিবর্তন করুন">
                         বাং
                     </a>
                 </div>
 
-                <!-- Arabic Font Selector Dropdown (Accessible in header on sm+, accessible in drawer on mobile) -->
-                <div class="relative hidden sm:block" @click.outside="fontMenuOpen = false">
-                    <button @click="fontMenuOpen = !fontMenuOpen" type="button" class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 hover:bg-[#EAE4D9]/50 dark:hover:bg-[#141C2B] text-xs font-medium text-[#181C1E] dark:text-white transition-colors" title="{{ __('Select Quranic Font') }}">
-                        <span class="font-arabic text-sm text-[#1B4D3E] dark:text-emerald-400">خط</span>
-                        <span class="hidden sm:inline text-xs" x-text="arabicFont === 'amiri' ? 'Amiri' : (arabicFont === 'scheherazade' ? 'Scheherazade' : (arabicFont === 'noto' ? 'Noto Naskh' : 'Lateef'))"></span>
-                        <svg class="w-3.5 h-3.5 text-[#5C656C] dark:text-[#94A3B8]" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <!-- Arabic Font Selector Dropdown -->
+                <div class="relative" @click.outside="fontMenuOpen = false">
+                    <button @click="fontMenuOpen = !fontMenuOpen" type="button" class="h-9 inline-flex items-center gap-1.5 px-2.5 rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 hover:bg-[#EAE4D9]/50 dark:hover:bg-[#141C2B] text-xs font-medium text-[#181C1E] dark:text-white transition-colors cursor-pointer shadow-2xs" title="{{ __('Select Quranic Font') }}">
+                        <span class="font-arabic text-sm text-[#1B4D3E] dark:text-emerald-400 leading-none">خط</span>
+                        <span class="hidden md:inline text-xs" x-text="arabicFont === 'amiri' ? 'Amiri' : (arabicFont === 'scheherazade' ? 'Scheherazade' : (arabicFont === 'noto' ? 'Noto Naskh' : 'Lateef'))"></span>
+                        <svg class="w-3 h-3 text-[#5C656C] dark:text-[#94A3B8]" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                         </svg>
                     </button>
@@ -221,7 +267,7 @@ class="h-full scroll-smooth"
                 </div>
 
                 <!-- Theme Toggle -->
-                <button @click="toggleTheme()" type="button" title="Toggle Theme (shortcut: 'm')" class="p-2 rounded-xl text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/60 dark:hover:bg-[#141C2B] transition-colors border border-transparent hover:border-[#E8E2D8] dark:hover:border-[#1E2738]">
+                <button @click="toggleTheme()" type="button" title="Toggle Theme (shortcut: 'm')" class="w-9 h-9 flex items-center justify-center rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/50 dark:hover:bg-[#141C2B] transition-colors cursor-pointer shadow-2xs">
                     <svg x-show="darkMode" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="1.75" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
                     </svg>
@@ -231,8 +277,8 @@ class="h-full scroll-smooth"
                 </button>
 
                 <!-- Mobile Hamburger Button -->
-                <button @click="mobileDrawerOpen = true" type="button" class="lg:hidden p-2 rounded-xl text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/60 dark:hover:bg-[#141C2B] transition-colors" title="Open Navigation Drawer">
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <button @click="mobileDrawerOpen = true" type="button" class="lg:hidden w-9 h-9 flex items-center justify-center rounded-xl border border-[#E8E2D8] dark:border-[#1E2738] bg-white/70 dark:bg-[#111723]/70 text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/50 dark:hover:bg-[#141C2B] transition-colors cursor-pointer shadow-2xs" title="Open Navigation Drawer">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
                 </button>

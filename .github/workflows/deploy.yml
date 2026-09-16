@@ -4,6 +4,10 @@ on:
   push:
     branches: [deploy]
 
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: [self-hosted, linux, laravel]
@@ -30,14 +34,12 @@ jobs:
             "$GITHUB_WORKSPACE/" \
             /home/fazley/apps/learn-arabic/
           cd /home/fazley/apps/learn-arabic/
-          docker compose -f docker-compose.prod.yml down || true
           docker compose -f docker-compose.prod.yml up -d --build
 
       - name: Post-deploy
         run: |
-          docker exec learn-arabic php artisan key:generate --force || true
           docker exec learn-arabic php artisan migrate --force
-          docker exec learn-arabic php artisan db:seed --force || true
+          docker exec learn-arabic php artisan db:seed --class=TopQuranicVocabularySeeder --force || true
           docker exec learn-arabic php artisan config:cache
           docker exec learn-arabic php artisan route:cache
           docker exec learn-arabic php artisan view:cache
@@ -45,3 +47,4 @@ jobs:
       - name: Health check
         run: |
           docker compose -f /home/fazley/apps/learn-arabic/docker-compose.prod.yml ps
+
