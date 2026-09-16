@@ -32,6 +32,8 @@ services:
     image: postgres:17-alpine
     container_name: learn-arabic-db
     restart: unless-stopped
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${DB_DATABASE:-learn_arabic}
       POSTGRES_USER: ${DB_USERNAME:-root}
