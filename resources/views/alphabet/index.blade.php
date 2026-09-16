@@ -70,9 +70,9 @@
                     <div class="rounded-2xl bg-white dark:bg-[#131926] border border-[#EBE6DE] dark:border-[#212B3E] p-6 space-y-4 hover:border-[#1B4D3E]/40 dark:hover:border-emerald-500/40 transition-colors shadow-xs">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center gap-3.5">
-                                <!-- Canonical Diacritic Carrier Tile -->
-                                <div class="w-16 h-16 rounded-2xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-center font-arabic text-4xl text-[#9A722C] dark:text-amber-400 select-none shadow-xs">
-                                    <span class="leading-none">&#x25CC;{{ $h->symbol }}</span>
+                                <!-- Canonical Arabic Diacritic Carrier Tile (using authentic Arabic Tatweel) -->
+                                <div class="w-16 h-16 rounded-2xl bg-[#FAF8F5] dark:bg-[#0B0F19] border border-[#EBE6DE] dark:border-[#212B3E] flex items-center justify-center font-arabic text-3xl sm:text-4xl text-[#9A722C] dark:text-amber-400 select-none shadow-xs">
+                                    <span class="leading-none">&#x0640;{{ $h->symbol }}&#x0640;</span>
                                 </div>
                                 <div>
                                     <h3 class="text-base font-semibold text-[#1A1D20] dark:text-white">
