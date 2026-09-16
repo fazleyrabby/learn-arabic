@@ -12,6 +12,7 @@ class QuranSurah extends Model
         'name_ar',
         'name_latin',
         'name_english',
+        'name_bn',
         'revelation_type',
         'verse_count',
     ];

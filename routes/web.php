@@ -16,7 +16,9 @@ Route::get('/alphabet/{order}', [AlphabetController::class, 'show'])->name('alph
 Route::get('/reading', [ReadingController::class, 'index'])->name('reading.index');
 
 // Quran Study
+Route::get('/quran', [QuranController::class, 'index'])->name('quran.index');
 Route::get('/quran/fatihah', [QuranController::class, 'fatihah'])->name('quran.fatihah');
+Route::get('/quran/{number}', [QuranController::class, 'show'])->name('quran.show')->whereNumber('number');
 Route::get('/api/quran/words/{id}', [QuranController::class, 'word'])->name('api.quran.word');
 
 // Vocabulary

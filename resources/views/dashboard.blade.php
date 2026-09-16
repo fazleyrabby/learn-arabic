@@ -32,6 +32,103 @@
             </div>
         </div>
 
+        <!-- Junior & 5-Year-Old Friendly Learning Hub -->
+        <div class="rounded-3xl bg-gradient-to-br from-emerald-50 via-amber-50/40 to-teal-50 dark:from-[#131926] dark:via-[#111723] dark:to-[#0B0F19] border-2 border-emerald-300 dark:border-emerald-700/60 p-6 sm:p-8 space-y-6 shadow-sm">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-amber-200/60 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 mb-2">
+                        <span>⭐ {{ app()->getLocale() === 'bn' ? '৫ বছর বয়সীদের জন্য সহজ আরবি শিক্ষা' : 'Kids & Little Stars Friendly (Ages 5+)' }}</span>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-[#181C1E] dark:text-white">
+                        {{ app()->getLocale() === 'bn' ? 'ছোটদের আনন্দময় আরবি শিক্ষা হাব' : 'Joyful Arabic Learning for Children' }}
+                    </h2>
+                    <p class="text-xs sm:text-sm text-[#5C656C] dark:text-[#94A3B8] mt-1">
+                        {{ app()->getLocale() === 'bn' 
+                            ? 'বড় বড় বাটন, স্পর্শ করলেই মিষ্টি উচ্চারণ এবং শব্দে শব্দে কুরআন শেখার সহজ পরিবেশ।' 
+                            : 'Huge touchable cards, instant clear pronunciation on tap, and word-by-word Quran recitation.' }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Card 1: Alphabet Soundboard -->
+                <a href="{{ route('alphabet.index', ['tab' => 'kids']) }}" class="group rounded-2xl bg-white dark:bg-[#1B2332] border border-[#E8E2D8] dark:border-[#212B3E] hover:border-amber-400 p-5 space-y-3 shadow-xs hover:shadow-md hover:scale-[1.02] active:scale-95 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-100 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 flex items-center justify-center text-2xl font-bold">
+                        🎈
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-[#181C1E] dark:text-white group-hover:text-[#1B4D3E] dark:group-hover:text-emerald-400">
+                            {{ app()->getLocale() === 'bn' ? 'হরফ সাউন্ডবোর্ড' : 'Letter Soundboard' }}
+                        </h3>
+                        <p class="text-xs text-[#5C656C] dark:text-[#94A3B8] mt-1">
+                            {{ app()->getLocale() === 'bn' ? '২৮টি হরফে স্পর্শ করলেই শুনবে উচ্চারণ ও স্টার পাবে।' : 'Touch any of the 28 letters to hear its sound and collect stars!' }}
+                        </p>
+                    </div>
+                    <div class="text-[11px] font-bold text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                        <span>{{ app()->getLocale() === 'bn' ? 'হরফ শুনুন' : 'Tap & Listen' }}</span>
+                        <span>&rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Card 2: Vowel Magic Ba-Bi-Bu -->
+                <a href="{{ route('alphabet.index', ['tab' => 'kids']) }}" class="group rounded-2xl bg-white dark:bg-[#1B2332] border border-[#E8E2D8] dark:border-[#212B3E] hover:border-emerald-400 p-5 space-y-3 shadow-xs hover:shadow-md hover:scale-[1.02] active:scale-95 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center text-2xl font-bold">
+                        🎵
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-[#181C1E] dark:text-white group-hover:text-[#1B4D3E] dark:group-hover:text-emerald-400">
+                            {{ app()->getLocale() === 'bn' ? 'বা - বি - বু ম্যাজিক' : 'Ba - Bi - Bu Sound Machine' }}
+                        </h3>
+                        <p class="text-xs text-[#5C656C] dark:text-[#94A3B8] mt-1">
+                            {{ app()->getLocale() === 'bn' ? 'জবর, জের, পেশ মিলিয়ে হরকত দিয়ে পড়া শিখুন।' : 'Mix letters with Fatḥah, Kasrah & Ḍammah to master phonics.' }}
+                        </p>
+                    </div>
+                    <div class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                        <span>{{ app()->getLocale() === 'bn' ? 'ম্যাজিক শুরু' : 'Try Mixer' }}</span>
+                        <span>&rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Card 3: 4 Quls & Kids Favorites -->
+                <a href="{{ route('quran.index', ['tab' => 'kids']) }}" class="group rounded-2xl bg-white dark:bg-[#1B2332] border border-[#E8E2D8] dark:border-[#212B3E] hover:border-blue-400 p-5 space-y-3 shadow-xs hover:shadow-md hover:scale-[1.02] active:scale-95 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 flex items-center justify-center text-2xl font-bold">
+                        ⭐
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-[#181C1E] dark:text-white group-hover:text-[#1B4D3E] dark:group-hover:text-emerald-400">
+                            {{ app()->getLocale() === 'bn' ? 'ছোটদের প্রিয় সূরা' : 'Kids 4 Quls & Favorites' }}
+                        </h3>
+                        <p class="text-xs text-[#5C656C] dark:text-[#94A3B8] mt-1">
+                            {{ app()->getLocale() === 'bn' ? 'আল-ফাতিহা, ইখলাস, ফালাক, নাস ও কাওসার সহজে শিখুন।' : 'Surah Al-Fatihah, 4 Quls & short Surahs with word tap.' }}
+                        </p>
+                    </div>
+                    <div class="text-[11px] font-bold text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                        <span>{{ app()->getLocale() === 'bn' ? 'সূরা শুনুন' : 'Explore Surahs' }}</span>
+                        <span>&rarr;</span>
+                    </div>
+                </a>
+
+                <!-- Card 4: Complete Holy Quran Studio -->
+                <a href="{{ route('quran.index', ['tab' => 'all']) }}" class="group rounded-2xl bg-white dark:bg-[#1B2332] border border-[#E8E2D8] dark:border-[#212B3E] hover:border-purple-400 p-5 space-y-3 shadow-xs hover:shadow-md hover:scale-[1.02] active:scale-95 transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-100 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 flex items-center justify-center text-2xl font-bold">
+                        📖
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-[#181C1E] dark:text-white group-hover:text-[#1B4D3E] dark:group-hover:text-emerald-400">
+                            {{ app()->getLocale() === 'bn' ? 'সকল ১১৪টি সূরা' : 'Complete 114 Surahs' }}
+                        </h3>
+                        <p class="text-xs text-[#5C656C] dark:text-[#94A3B8] mt-1">
+                            {{ app()->getLocale() === 'bn' ? 'মিশারী রাশেদ আলাফাসীর তেলাওয়াত ও বাংলা অর্থ।' : 'Mishary Rashid Alafasy recitation with English & Bengali meanings.' }}
+                        </p>
+                    </div>
+                    <div class="text-[11px] font-bold text-purple-600 dark:text-purple-400 flex items-center gap-1">
+                        <span>{{ app()->getLocale() === 'bn' ? 'স্টুডিও খুলুন' : 'Open Quran' }}</span>
+                        <span>&rarr;</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
         <!-- Sequential Curriculum Pathway -->
         <div class="space-y-8">
             <div class="flex items-baseline justify-between border-b border-[#E8E2D8] dark:border-[#1E2738] pb-3">
@@ -112,25 +209,27 @@
                     </div>
                 </a>
 
-                <!-- Stage 4: Surah Al-Fatihah -->
-                <a href="{{ route('quran.fatihah') }}" class="group py-6 block hover:bg-[#FAF8F5]/60 dark:hover:bg-[#111723]/60 transition-colors">
+                <!-- Stage 4: The Holy Quran Studio (114 Surahs) -->
+                <a href="{{ route('quran.index') }}" class="group py-6 block hover:bg-[#FAF8F5]/60 dark:hover:bg-[#111723]/60 transition-colors">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div class="flex items-baseline gap-4 sm:gap-6">
                             <span class="font-mono text-sm font-semibold text-[#5C656C] dark:text-[#94A3B8] w-6 shrink-0">04</span>
                             <div class="space-y-1">
                                 <div class="flex items-center gap-3">
                                     <h3 class="text-lg font-semibold text-[#181C1E] dark:text-white group-hover:text-[#1B4D3E] dark:group-hover:text-emerald-400 transition-colors">
-                                        Surah Al-Fatihah: Word-by-Word Analysis
+                                        {{ app()->getLocale() === 'bn' ? 'পবিত্র কুরআন স্টুডিও (১১৪টি সূরা)' : 'The Holy Quran Studio (114 Surahs)' }}
                                     </h3>
-                                    <span class="font-arabic text-xl text-[#1B4D3E] dark:text-emerald-400 select-none">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+                                    <span class="font-arabic text-xl text-[#1B4D3E] dark:text-emerald-400 select-none">القرآن الكريم</span>
                                 </div>
                                 <p class="text-sm text-[#5C656C] dark:text-[#94A3B8] max-w-2xl">
-                                    Deconstruct every word of the Opening Surah with interactive recitation audio, root mapping, and morphological breakdown.
+                                    {{ app()->getLocale() === 'bn' 
+                                        ? '১১৪টি সূরা বিশুদ্ধ অডিও তেলাওয়াতসহ শুনুন এবং শব্দে শব্দে ইংরেজি ও বাংলা অর্থ শিখুন।' 
+                                        : 'Listen to crystal-clear recitations across all 114 Surahs with word-by-word tapping, English & Bengali translations.' }}
                                 </p>
                             </div>
                         </div>
                         <div class="text-xs font-medium text-[#1B4D3E] dark:text-emerald-400 shrink-0 flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                            <span>Open reader</span>
+                            <span>{{ app()->getLocale() === 'bn' ? 'স্টুডিও খুলুন' : 'Open Quran Studio' }}</span>
                             <span>&rarr;</span>
                         </div>
                     </div>

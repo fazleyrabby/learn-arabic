@@ -134,8 +134,8 @@ class="h-full scroll-smooth"
                 <a href="{{ route('vocabulary.index') }}" class="px-3 py-2 rounded-xl {{ request()->routeIs('vocabulary.*') ? 'bg-[#EAE4D9]/70 dark:bg-[#141C2B] text-[#181C1E] dark:text-white font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/40 dark:hover:bg-[#141C2B]/60' }} transition-colors">
                     {{ __('Vocabulary') }}
                 </a>
-                <a href="{{ route('quran.fatihah') }}" class="px-3 py-2 rounded-xl {{ request()->routeIs('quran.*') ? 'bg-[#EAE4D9]/70 dark:bg-[#141C2B] text-[#181C1E] dark:text-white font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/40 dark:hover:bg-[#141C2B]/60' }} transition-colors">
-                    {{ __('Al-Fatihah') }}
+                <a href="{{ route('quran.index') }}" class="px-3 py-2 rounded-xl {{ request()->routeIs('quran.*') ? 'bg-[#EAE4D9]/70 dark:bg-[#141C2B] text-[#181C1E] dark:text-white font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/40 dark:hover:bg-[#141C2B]/60' }} transition-colors">
+                    {{ __('Quran Studio') }}
                 </a>
                 <a href="{{ route('references') }}" class="px-3 py-2 rounded-xl {{ request()->routeIs('references') ? 'bg-[#EAE4D9]/70 dark:bg-[#141C2B] text-[#181C1E] dark:text-white font-semibold' : 'text-[#5C656C] dark:text-[#94A3B8] hover:text-[#181C1E] dark:hover:text-white hover:bg-[#EAE4D9]/40 dark:hover:bg-[#141C2B]/60' }} transition-colors">
                     {{ __('Sources') }}
@@ -335,12 +335,12 @@ class="h-full scroll-smooth"
                     <span class="text-xs font-mono text-[#5C656C] dark:text-[#94A3B8]">100</span>
                 </a>
 
-                <a href="{{ route('quran.fatihah') }}" @click="mobileDrawerOpen = false" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->routeIs('quran.*') ? 'bg-[#1B4D3E]/10 dark:bg-emerald-950/40 text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#181C1E] dark:text-gray-200 hover:bg-[#EAE4D9]/40 dark:hover:bg-[#141C2B]' }}">
+                <a href="{{ route('quran.index') }}" @click="mobileDrawerOpen = false" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->routeIs('quran.*') ? 'bg-[#1B4D3E]/10 dark:bg-emerald-950/40 text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#181C1E] dark:text-gray-200 hover:bg-[#EAE4D9]/40 dark:hover:bg-[#141C2B]' }}">
                     <div class="flex items-center gap-3">
-                        <span class="font-arabic text-sm text-[#9A722C] dark:text-amber-400">الفاتحة</span>
-                        <span>{{ __('Surah Al-Fatihah') }}</span>
+                        <span class="font-arabic text-sm text-[#9A722C] dark:text-amber-400">القرآن</span>
+                        <span>{{ __('Quran Studio') }}</span>
                     </div>
-                    <span class="text-xs text-[#5C656C] dark:text-[#94A3B8]">7</span>
+                    <span class="text-xs text-[#5C656C] dark:text-[#94A3B8]">114</span>
                 </a>
 
                 <a href="{{ route('review.index') }}" @click="mobileDrawerOpen = false" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl {{ request()->routeIs('review.*') ? 'bg-[#1B4D3E]/15 dark:bg-emerald-950/60 text-[#1B4D3E] dark:text-emerald-400 font-semibold' : 'text-[#181C1E] dark:text-gray-200 hover:bg-[#EAE4D9]/40 dark:hover:bg-[#141C2B]' }}">

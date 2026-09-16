@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ArabicAlphabetSeeder::class,
             QuranAlFatihahSeeder::class,
+            FullQuranSeeder::class,
             TopQuranicVocabularySeeder::class,
         ]);
 
